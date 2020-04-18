@@ -1,86 +1,104 @@
-const events = [
-  {
-    id: 1,
-    ownerId: 11,
-    name: "Harry Potter and the Sorcerer's stone",
-    eventStartDate: "01/01/2020",
-    eventEndDate: "01/01/2020",
-    description: "description ...",
-    url: "www.event.com",
-    latitude: "0.0.0",
-    longitude: "1,1,1",
-  },
-  {
-    id: 2,
-    ownerId: 11,
-    name: "Harry Potter and the Sorcerer's stone",
-    eventStartDate: "01/01/2020",
-    eventEndDate: "01/01/2020",
-    description: "description ...",
-    url: "www.event.com",
-    latitude: "0.0.0",
-    longitude: "1,1,1",
-  },
-  {
-    id: 3,
-    ownerId: 11,
-    name: "Harry Potter and the Sorcerer's stone",
-    eventStartDate: "01/01/2020",
-    eventEndDate: "01/01/2020",
-    description: "description ...",
-    url: "www.event.com",
-    latitude: "0.0.0",
-    longitude: "1,1,1",
-  },
-  {
-    id: 4,
-    ownerId: 11,
-    name: "Harry Potter and the Sorcerer's stone",
-    eventStartDate: "01/01/2020",
-    eventEndDate: "01/01/2020",
-    description: "description ...",
-    url: "www.event.com",
-    latitude: "0.0.0",
-    longitude: "1,1,1",
-  },
-];
+const axios = require("axios");
+const URI = require("../../server/msEvent");
+const completeURI = `${URI}events`;
+const completeFilterURI = `${URI}events/filter`;
 
-const getEvents = () => events;
-const getEventsByID = ({ eventId }) => {
-  console.log(events[1]);
-
-  events[eventId];
-};
-const getEventsByStatus = ({ status }) => events;
-const getEventsByOwnerType = ({ ownerType }) => events;
-const getEventsByName = ({ name }) => events;
-const getEventsByRangeDate = ({ start, end }) => events;
-const getEventsByOwnerID = ({ type, ownerID }) => events;
-const addEvent = ({ input }) => {
-  console.log(input);
-
-  events.push(input);
-  return input;
-};
-const updateEvent = ({ id, input }) => events;
-const deleteEvent = ({ id }) => {
-  events.pop();
-  return events[0];
+const getAllEvents = () => {
+  axios
+    .get(completeURI)
+    .then(({ data }) => {
+      console.log(data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+    });
 };
 
-const resolvers = {
-  // Queries
-  events: getEvents,
-  eventsByID: getEventsByID,
-  eventsByStatus: getEventsByStatus,
-  eventsByOwnerType: getEventsByOwnerType,
-  eventsByName: getEventsByName,
-  eventsByRangeDate: getEventsByRangeDate,
-  eventsByOwnerID: getEventsByOwnerID,
-  // Mutations
-  addEvent: addEvent,
-  updateEvent: updateEvent,
-  deleteEvent: deleteEvent,
+const getEventByID = (id) => {
+  axios
+    .get(`${completeURI}/${id}`)
+    .then(({ data }) => {
+      console.log(data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+    });
 };
-
-module.exports = resolvers;
+const getEventsByStatus = (status) => {
+  axios
+    .get(`${completeFilterURI}/status?status=${status}`)
+    .then(({ data }) => {
+      console.log(data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+    });
+};
+const getEventsByOwnerType = (ownerType) => {
+  axios
+    .get(`${completeFilterURI}/ownerType?type=${ownerType}`)
+    .then(({ data }) => {
+      console.log(data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+    });
+};
+const getEventsByName = (name) => {
+  axios
+    .get(`${completeFilterURI}/name?name=${name}`)
+    .then(({ data }) => {
+      console.log(data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+    });
+};
+const getEventsByRangeDate = (start, end) => {
+  axios
+    .get(`${completeFilterURI}/rangeDate?start=${start}&end=${end}`)
+    .then(({ data }) => {
+      console.log(data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+    });
+};
+const getEventsByOwnerID = (type, id) => {
+  axios
+    .get(`${completeFilterURI}/owner?type=${type}&id=${id}`)
+    .then(({ data }) => {
+      console.log(data);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+    });
+};

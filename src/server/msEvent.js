@@ -1,7 +1,7 @@
 const PORT = "8000";
-const END_POINT = "localhost";
+const END_POINT = "http://localhost";
 const BASE_URI = "/";
 
 const URL = END_POINT + ":" + PORT + BASE_URI;
 
-export default URL;
+module.exports = URL;

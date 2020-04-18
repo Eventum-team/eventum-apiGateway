@@ -6,7 +6,7 @@ var { buildSchema } = require("graphql");
 var eventsSchema = require("./schemas/typeDef/events");
 var schema = buildSchema(eventsSchema);
 
-var eventsResolvers = require("./resolvers/msAPIs/events");
+var eventsResolvers = require("./resolvers/resolvers/eventsResolver");
 var root = eventsResolvers;
 
 var app = express();
