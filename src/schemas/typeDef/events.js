@@ -13,10 +13,6 @@ type Query {
 
 const eventsMutations = `
 type Mutation {
-    addEvent(
-        title: String!,
-        owner: String!
-    ): Event
 }
 `;
 const events = `

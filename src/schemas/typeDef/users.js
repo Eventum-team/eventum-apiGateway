@@ -1,18 +1,86 @@
 const usersTypeDef = `
+type Message {
+    message: String
+    status: Int
+}
 type User {
-
+    id: ID!
+    name: String!
+    phone_number: String!
+    age: Int
+    career: String
+    created_at: String!
+    updated_at: String!
+}
+type UserInput {
+    name: String!
+    phone_number: String!
+    age: Int
+    career: String
+}
+type UserGroup {
+    user_id: Int!
+    group_id: Int!
+    status: String!
+    created_at: String!
+    updated_at: String!
+}
+type UserGroupInput {
+    user_id: Int!
+    group_id: Int!
+    status: String!
+}
+type UserGroupInputUpdate {
+    status: String!
+}
+type UserEvent {
+    user_id: Int!
+    group_id: Int!
+    assistance: Boolean!
+    interested: Boolean!
+    created_at: String!
+    updated_at: String!
+}
+type UserEventInput {
+    user_id: Int!
+    group_id: Int!
+    assistance: Boolean!
+    interested: Boolean!
+}
+type UserEventInputUpdate {
+    assistance: Boolean!
+    interested: Boolean!
 }
 `;
 
 const usersQueries = `
 type Query {
-
+    users: [User!]!
+    userById(userId: Int): User!
+    groupsByUser(userId: Int): [UserGroup!]!
+    eventsByUser(userId: Int): [UserEvent!]!
+    userGroups: [UserGroup!]!
+    usersGroupByUserAndGroup(userId: Int, groupId: Int): UserGroup!
+    usersByGroup(groupId: Int): [User!]!
+    adminsByGroup(groupId: Int): [User!]!
+    userEvents: [UserEvent!]!
+    userEventByuserIdAndEventId(userId: Int, eventId: Int): UserEvent!
+    assitnatsByEvent(eventId: Int): [User!]!
+    interestedByEvent(eventId: Int): [User!]!
 }
 `;
 
 const usersMutations = `
 type Mutation {
-
+    addUser(input: UserInput): Message!
+    addUserGroup(input: UserGroupInput): Message!
+    addUserEvent(input: UserEventInput): Message!
+    updateUser(userId: Int, input: UserInput): Message!
+    updateUserGroup(userId: Int, groupId: Int, input: UserGroupInputUpdate): Message!
+    updateUserEvent(userId: Int, eventId: Int, input: UserEventInputUpdate): Message!
+    deleteUser(userId: Int): Message!
+    deleteUserGroup(userId: Int, groupId: Int): Message!
+    deleteUserEvent(userId: Int, eventId: Int): Message!
 }
 `;
 
