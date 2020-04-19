@@ -3,8 +3,6 @@ var graphqlHTTP = require("express-graphql");
 var { buildSchema } = require("graphql");
 var { getAllGroups } = require("./resolvers/msAPIs/groups.js");
 
-var root = eventsResolvers;
-
 var app = express();
 app.use(
   "/graphql",
