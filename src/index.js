@@ -1,13 +1,8 @@
 var express = require("express");
 var graphqlHTTP = require("express-graphql");
 var { buildSchema } = require("graphql");
+var { getAllGroups } = require("./resolvers/msAPIs/groups.js");
 
-//eventsSchema
-var eventsSchema = require("./schemas/typeDef/events");
-var schema = buildSchema(eventsSchema);
-
-//eventsSchema
-var eventsResolvers = require("./resolvers/resolvers/eventsResolver");
 var root = eventsResolvers;
 
 var app = express();
