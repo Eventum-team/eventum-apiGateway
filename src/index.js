@@ -2,10 +2,11 @@ var express = require("express");
 var graphqlHTTP = require("express-graphql");
 var { buildSchema } = require("graphql");
 
-// Construct a schema, using GraphQL schema language
+//eventsSchema
 var eventsSchema = require("./schemas/typeDef/events");
 var schema = buildSchema(eventsSchema);
 
+//eventsSchema
 var eventsResolvers = require("./resolvers/resolvers/eventsResolver");
 var root = eventsResolvers;
 
