@@ -30,6 +30,9 @@ type Event {
     url: String
     latitude: String
     longitude: String
+    comments: [Comment]
+    followers: Int
+    photo: String
 }
 `;
 

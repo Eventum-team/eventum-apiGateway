@@ -15,11 +15,20 @@ app.use(
     rootValue: root,
     graphiql: true,
     customFormatErrorFn: (error) => {
-      const e = JSON.parse(error.message);
-      return {
-        message: e.message,
-        status: e.status,
-      };
+      try {
+        const e = JSON.parse(error.message);
+        return {
+          message: e.message,
+          status: e.status,
+        };
+      } catch (e) {
+        return {
+          message: error.message,
+          locations: error.locations,
+          stack: error.stack ? error.stack.split("\n") : [],
+          path: error.path,
+        };
+      }
     },
   })
 );
