@@ -17,7 +17,7 @@ const resolvers = {
   groupByID: getGroupByID,
   groupsByName: getGroupsByName,
   groupsByIdType: getGroupsByIdType,
-  eventsByNameAndIdType: getGroupsByNameAndIdType,
+  groupsByNameAndIdType: getGroupsByNameAndIdType,
   // Mutations
   addGroup: createGroup,
   updateGroup: updateGroup,

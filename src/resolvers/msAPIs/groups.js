@@ -67,10 +67,25 @@ const getGroupsByIdType = async ({ id_type }) => {
 
 const getGroupsByNameAndIdType = async ({ name, id_type }) => {
   try {
-    const { data } = await axios.get(
-      `${completeFilterURI}?name=${name}&id_type=${id_type}`
-    );
-    return data;
+    if (name === undefined && id_type === undefined) {  
+      const { data } = await axios.get(completeURI);
+      return data;
+    } if (name === undefined){
+      const { data } = await axios.get(
+        `${completeFilterURI}?name=&id_type=${id_type}`
+      );
+      return data;
+    } else if (id_type === undefined) {
+      const { data } = await axios.get(
+        `${completeFilterURI}?name=${name}&id_type=`
+      );
+      return data;
+    } else {
+      const { data } = await axios.get(
+        `${completeFilterURI}?name=${name}&id_type=${id_type}`
+      );
+      return data;
+    }
   } catch (error) {
     throw new Error(
       JSON.stringify({

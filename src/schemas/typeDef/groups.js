@@ -28,7 +28,7 @@ const groupsQueries = `
     groupByID(groupId: ID!): Group!
     groupsByName(name: String!):[Group!]! 
     groupsByIdType(id_type: Int!):[Group!]! 
-    eventsByNameAndIdType(name: String!, id_type: Int!):[Group!]! 
+    groupsByNameAndIdType(name: String, id_type: Int):[Group!]! 
     typeById(id: ID!): Type
 `;
 

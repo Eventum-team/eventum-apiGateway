@@ -27,6 +27,7 @@ const viewsTypeDef = `
 const viewsQueries = `
   allGroups: [AllGroupsSearch!]!
   groupProfile (id:ID!): GroupsProfileSearch
+  filterGroups (name: String, id_type: Int): [AllGroupsSearch!]!
 `;
 
 const viewsMutations = `

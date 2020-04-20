@@ -1,4 +1,4 @@
-const { updateGroup, getTypeById, getAllGroups, createGroup, getGroupByID } = require("../../msAPIs/groups");
+const { updateGroup, getTypeById, getAllGroups, createGroup, getGroupByID, getGroupsByNameAndIdType} = require("../../msAPIs/groups");
 const { updateEvent } = require("../../msAPIs/events");
 
 const tokenOutOfDate = {
@@ -6,10 +6,58 @@ const tokenOutOfDate = {
   status: 401,
 };
 
-const filterGroups = ({ id_type, name }) => {
-  //Groups
-  //Media
-  //User
+
+
+/*
+    La idea de esta funcion es que filtre los grupos por id_type y nombre.
+    Se necesita:
+      - La informacion de los grupos filtrados (ms Grupos)
+      - La cantidad de seguidores que tiene un grupo (ms Usuarios)
+      - La imagen del grupo (ms medios)
+
+
+    La funcion retorna este esquema, si lo quieren cambiar vayan a schemas/views.js
+    type AllGroupsSearch {
+      id_group: ID!
+      type: String!
+      name: String!
+      description: String!
+      created_date: String!
+      contact_number: String
+      status: String!
+      followers: Int!
+    }
+*/
+const filterGroups = async ({ id_type, name }) => {
+
+  try {
+    const groups = await getGroupsByNameAndIdType({ id_type: id_type, name: name });
+    for (let i = 0; i < groups.length; i++) {
+      const id_group = groups[i].id_group;
+      const id_type = groups[i].id_type;
+      const {name} = await getTypeById({id:id_type})
+      
+      // aqui agrego el campo type al esquema, de la misma forma podemos hacer con la imagen y seguidores
+      groups[i].type = name;
+      
+      //user
+      //media
+      
+    }
+
+
+
+    return groups;
+  } catch (error) {
+    console.log(error)
+    const ms = JSON.parse(error.message);
+    throw new Error(
+      JSON.stringify({
+        message: ms.message,
+        status: ms.status,
+      })
+    );
+  }
 };
 
 
@@ -144,6 +192,8 @@ const createNewGroup = async ({ id_user, input, token }) => {
 
 
   //Media
+
+
   return group;
 };
 
@@ -214,4 +264,5 @@ module.exports = {
   createNewGroup,
   groupProfile,
   createNewGroup,
+  filterGroups,
 };
