@@ -1,6 +1,6 @@
 const groupsTypeDef = `
 input GroupInput {
-    id_group: Int!
+    id_group: Int
     id_type: Int!
     name: String!
     description: String!
@@ -16,6 +16,11 @@ type Group {
     contact_number: String
     status: String!
 }
+
+type Type {
+    id_type: ID!
+    name: String!
+}
 `;
 
 const groupsQueries = `
@@ -23,7 +28,8 @@ const groupsQueries = `
     groupByID(groupId: ID!): Group!
     groupsByName(name: String!):[Group!]! 
     groupsByIdType(id_type: Int!):[Group!]! 
-    eventsByNameAndIdType(name: String!, id_type: Int!):[Group!]! 
+    groupsByNameAndIdType(name: String, id_type: Int):[Group!]! 
+    typeById(id: ID!): Type
 `;
 
 const groupsMutations = `

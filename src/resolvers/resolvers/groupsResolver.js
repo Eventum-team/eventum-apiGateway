@@ -7,6 +7,7 @@ const {
   createGroup,
   updateGroup,
   deleteGroup,
+  getTypeById,
 } = require("../msAPIs/groups.js");
 
 // use by express-graphql in index.js
@@ -16,11 +17,12 @@ const resolvers = {
   groupByID: getGroupByID,
   groupsByName: getGroupsByName,
   groupsByIdType: getGroupsByIdType,
-  eventsByNameAndIdType: getGroupsByNameAndIdType,
+  groupsByNameAndIdType: getGroupsByNameAndIdType,
   // Mutations
   addGroup: createGroup,
   updateGroup: updateGroup,
   deleteGroup: deleteGroup,
+  typeById: getTypeById,
 };
 
 module.exports = resolvers;
