@@ -25,7 +25,7 @@ type NewAccessToken{
 }`;
 
 const authMutations = `
-    addUser(input: LogRegInput!): AuthUser
+    addUserAuth(input: LogRegInput!): AuthUser
     logUser(input: LogRegInput!): LoginTokens
     vrfTok(input: AccessToken!): String
     refreshTok(input: RefreshToken!): NewAccessToken

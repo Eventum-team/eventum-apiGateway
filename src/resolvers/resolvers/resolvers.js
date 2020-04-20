@@ -2,6 +2,7 @@ const comments = require("./commentsResolver");
 const auth = require("./authResolver");
 const events = require("./eventsResolver");
 const groups = require("./groupsResolver");
+const users = require("./usersResolver");
 const groupViews = require("./views/groupsViews");
 const eventsViews = require("./views/eventsViews");
 const userViews = require("./views/usersViews");
@@ -14,6 +15,7 @@ const resolvers = {
   ...auth,
   ...events,
   ...groups,
+  ...users,
   ...groupViews,
   ...eventsViews,
   ...userViews,

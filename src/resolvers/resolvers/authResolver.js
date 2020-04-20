@@ -8,7 +8,7 @@ const {
 // use by express-graphql in index.js
 const resolvers = {
   // Mutations
-  addUser: createUserAuth,
+  addUserAuth: createUserAuth,
   logUser: loginUser,
   vrfTok: loginVerify,
   refreshTok: loginRefresh,
