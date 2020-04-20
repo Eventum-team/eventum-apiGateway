@@ -175,5 +175,6 @@ module.exports = {
   editGroup,
   allGroups,
   createNewGroup,
-  groupProfile
+  groupProfile,
+  createNewGroup
 };
