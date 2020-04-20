@@ -1,16 +1,14 @@
 const groupsTypeDef = `
-type Message {
-    message: String
-    status: Int
-}
 input GroupInput {
+    id_group: Int!
     id_type: Int!
     name: String!
     description: String!
+    contact_number: String!
     status: String!
 }
 type Group {
-    id: ID!
+    id_group: ID!
     id_type: Int!
     name: String!
     description: String!
@@ -21,27 +19,17 @@ type Group {
 `;
 
 const groupsQueries = `
-type Query {
     groups: [Group!]! 
     groupByID(groupId: ID!): Group!
     groupsByName(name: String!):[Group!]! 
     groupsByIdType(id_type: Int!):[Group!]! 
     eventsByNameAndIdType(name: String!, id_type: Int!):[Group!]! 
-}
 `;
 
 const groupsMutations = `
-type Mutation {
     addGroup(input: GroupInput ): Message
     updateGroup(id: ID!,input: GroupInput ): Message
     deleteGroup(id: ID!): Message
-}
 `;
 
-const groups = `
-    ${groupsTypeDef}
-    ${groupsQueries}
-    ${groupsMutations}
-`;
-
-module.exports = groups;
+module.exports = { groupsTypeDef, groupsQueries, groupsMutations };

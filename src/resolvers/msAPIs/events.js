@@ -8,7 +8,12 @@ const getAllEvents = async () => {
     const { data } = await axios.get(completeURI);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -17,7 +22,12 @@ const getEventByID = async ({ eventId }) => {
     const { data } = await axios.get(`${completeURI}/${eventId}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -28,7 +38,12 @@ const getEventsByStatus = async ({ status }) => {
     );
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -39,7 +54,12 @@ const getEventsByOwnerType = async ({ ownerType }) => {
     );
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -48,7 +68,12 @@ const getEventsByName = async ({ name }) => {
     const { data } = await axios.get(`${completeFilterURI}/name?name=${name}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -61,7 +86,12 @@ const getEventsByRangeDate = async ({ start, end }) => {
 
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -72,7 +102,12 @@ const getEventsByOwnerID = async ({ type, id }) => {
     );
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -81,7 +116,12 @@ const createEvent = async ({ input }) => {
     const { data } = await axios.post(`${completeURI}`, input); // event obj structured define in resolver function
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -90,7 +130,12 @@ const updateEvent = async ({ id, input }) => {
     const { data } = await axios.put(`${completeURI}/${id}`, input); // event obj structured define in resolver function
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -99,7 +144,12 @@ const deleteEvent = async ({ id }) => {
     const { data } = await axios.delete(`${completeURI}/${id}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 

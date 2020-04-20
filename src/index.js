@@ -1,16 +1,28 @@
-var express = require("express");
-var graphqlHTTP = require("express-graphql");
-var { buildSchema } = require("graphql");
+const express = require("express");
+const graphqlHTTP = require("express-graphql");
+const { buildSchema } = require("graphql");
 
-var app = express();
+const schemaStructure = require("./schemas/typeDef/schema");
+const schema = buildSchema(schemaStructure);
+
+const root = require("./resolvers/resolvers/resolvers");
+
+const app = express();
 app.use(
   "/graphql",
   graphqlHTTP({
     schema: schema,
     rootValue: root,
     graphiql: true,
+    customFormatErrorFn: (error) => {
+      const e = JSON.parse(error.message);
+      return {
+        message: e.message,
+        status: e.status,
+      };
+    },
   })
 );
-app.listen(3004, () => {
-  console.log("Running a GraphQL API server at localhost:3004/graphql");
+app.listen(3000, () => {
+  console.log("Running a GraphQL API server at localhost:3000/graphql");
 });

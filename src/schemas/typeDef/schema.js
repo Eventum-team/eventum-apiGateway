@@ -1,20 +1,36 @@
-const comments = require("./comments.js");
-const auth = require("./auth");
-const events = require("./events");
-const groups = require("./groups");
-const media = require("./media");
-const users = require("./users");
-
-// unir todos los esquemas cuando esten
-//descomentar y mover dentro del stringo el para probar
+const {
+  commentsTypeDef,
+  commentsQueries,
+  commentsMutations,
+} = require("./comments.js");
+const { authTypeDef, authMutations, authQueries } = require("./auth");
+const { eventsTypeDef, eventsQueries, eventsMutations } = require("./events");
+const { groupsTypeDef, groupsQueries, groupsMutations } = require("./groups");
+const { viewsTypeDef, viewsQueries, viewsMutations } = require("./views");
+// const media = require("./media");
+// const users = require("./users");
 
 const schema = `
-    ${events}
+${authTypeDef}
+${commentsTypeDef}
+${groupsTypeDef}
+${eventsTypeDef}
+${viewsTypeDef}
+
+type Mutation {
+    ${authMutations}
+    ${commentsMutations}
+    ${groupsMutations}
+    ${eventsMutations}
+    ${viewsMutations}
+}
+type Query {
+    ${authQueries}
+    ${commentsQueries}
+    ${groupsQueries}
+    ${eventsQueries}
+    ${viewsQueries}
+}
 `;
-//     ${comments}
-//     ${users}
-//     ${auth}
-//     ${groups}
-//     ${media}
 
 module.exports = schema;

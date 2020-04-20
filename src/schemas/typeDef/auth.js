@@ -25,26 +25,14 @@ type NewAccessToken{
 }`;
 
 const authMutations = `
-type Mutation {
     addUser(input: LogRegInput!): AuthUser
     logUser(input: LogRegInput!): LoginTokens
     vrfTok(input: AccessToken!): String
     refreshTok(input: RefreshToken!): NewAccessToken
-}
 `;
 
 const authQueries = `
-type Query {
     dummy: String
-}
 `;
 
-
-// use by express-graphql in index.js
-const auth = `
-    ${authTypeDef}
-    ${authQueries}
-    ${authMutations}
-`;
-
-module.exports = auth;
+module.exports = { authTypeDef, authMutations, authQueries };

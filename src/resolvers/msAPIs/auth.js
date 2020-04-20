@@ -5,13 +5,16 @@ const VerifyURL = `${URI}auth/login/verify/`;
 const RefreshURL = `${URI}auth/login/refresh/`;
 const RegisterURL = `${URI}auth/register/`;
 
-
 const createUserAuth = async ({ input }) => {
+  const res = { data: {}, error: null };
   try {
     const { data } = await axios.post(`${RegisterURL}`, input);
-    return data;
+    res.data = data;
+    return res;
   } catch (error) {
-    console.log(error);
+    e = Error("");
+    res.error = error;
+    return res;
   }
 };
 

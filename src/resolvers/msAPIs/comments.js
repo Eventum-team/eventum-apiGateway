@@ -7,7 +7,12 @@ const getCommentsByID = async ({ eventId }) => {
     const { data } = await axios.get(`${completeURI}/${eventId}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -16,7 +21,12 @@ const createComment = async ({ input }) => {
     const { data } = await axios.post(`${completeURI}`, input); // event obj structured define in resolver function
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -25,7 +35,12 @@ const updateComment = async ({ id, input }) => {
     const { data } = await axios.put(`${completeURI}/${id}`, input); // event obj structured define in resolver function
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -34,7 +49,12 @@ const deleteComment = async ({ id }) => {
     const { data } = await axios.delete(`${completeURI}/${id}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
