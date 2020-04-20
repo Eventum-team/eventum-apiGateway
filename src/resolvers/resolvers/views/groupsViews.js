@@ -1,4 +1,11 @@
-const { updateGroup, getTypeById, getAllGroups, createGroup, getGroupByID, getGroupsByNameAndIdType} = require("../../msAPIs/groups");
+const {
+  updateGroup,
+  getTypeById,
+  getAllGroups,
+  createGroup,
+  getGroupByID,
+  getGroupsByNameAndIdType,
+} = require("../../msAPIs/groups");
 const { updateEvent } = require("../../msAPIs/events");
 
 const tokenOutOfDate = {
@@ -6,7 +13,15 @@ const tokenOutOfDate = {
   status: 401,
 };
 
-
+const throwCustomError = (error) => {
+  const ms = JSON.parse(error.message);
+  throw new Error(
+    JSON.stringify({
+      message: ms.message,
+      status: ms.status,
+    })
+  );
+};
 
 /*
     La idea de esta funcion es que filtre los grupos por id_type y nombre.
@@ -29,38 +44,28 @@ const tokenOutOfDate = {
     }
 */
 const filterGroups = async ({ id_type, name }) => {
-
   try {
-    const groups = await getGroupsByNameAndIdType({ id_type: id_type, name: name });
+    const groups = await getGroupsByNameAndIdType({
+      id_type: id_type,
+      name: name,
+    });
     for (let i = 0; i < groups.length; i++) {
       const id_group = groups[i].id_group;
       const id_type = groups[i].id_type;
-      const {name} = await getTypeById({id:id_type})
-      
+      const { name } = await getTypeById({ id: id_type });
+
       // aqui agrego el campo type al esquema, de la misma forma podemos hacer con la imagen y seguidores
       groups[i].type = name;
-      
+
       //user
       //media
-      
     }
-
-
 
     return groups;
   } catch (error) {
-    console.log(error)
-    const ms = JSON.parse(error.message);
-    throw new Error(
-      JSON.stringify({
-        message: ms.message,
-        status: ms.status,
-      })
-    );
+    throwCustomError(error);
   }
 };
-
-
 
 /*
     La idea de esta funcion es que liste todos los grupos que hay.
@@ -88,30 +93,19 @@ const allGroups = async () => {
     for (let i = 0; i < groups.length; i++) {
       const id_group = groups[i].id_group;
       const id_type = groups[i].id_type;
-      const {name} = await getTypeById({id:id_type})
-      
+      const { name } = await getTypeById({ id: id_type });
+
       // aqui agrego el campo type al esquema, de la misma forma podemos hacer con la imagen y seguidores
       groups[i].type = name;
-      
+
       //user
       //media
     }
     return groups;
   } catch (error) {
-    console.log(error)
-    const ms = JSON.parse(error.message);
-    throw new Error(
-      JSON.stringify({
-        message: ms.message,
-        status: ms.status,
-      })
-    );
+    throwCustomError(error);
   }
 };
-
-
-
-
 
 const editGroup = async ({ id_user, input, token }) => {
   try {
@@ -122,21 +116,9 @@ const editGroup = async ({ id_user, input, token }) => {
       return tokenOutOfDate;
     }
   } catch (error) {
-    
-    const ms = JSON.parse(error.message);
-    throw new Error(
-      JSON.stringify({
-        message: ms.message,
-        status: ms.status,
-      })
-    );
+    throwCustomError(error);
   }
 };
-
-
-
-
-
 
 /*
     La funcion retorna este esquema, si lo quieren cambiar vayan a schemas/views.js
@@ -155,49 +137,30 @@ const editGroup = async ({ id_user, input, token }) => {
 const createNewGroup = async ({ id_user, input, token }) => {
   var group;
 
-
   // tener encuenta como se recibe IMG
   // Auth
 
+  // Verificar que el usuario sea administrador
 
-  // Verificar que el usuario sea administrador 
-  
   // Crear el grupo
   try {
-    group = await createGroup({ input : input })
+    group = await createGroup({ input: input });
     // const id_group = data
     const id_group = group.id_group;
     const id_type = group.id_type;
 
-    
-
-
-    const {name} = await getTypeById({id:id_type})
+    const { name } = await getTypeById({ id: id_type });
     group.type = name;
-
-
-    
   } catch (error) {
-    
-    const ms = JSON.parse(error.message);
-    throw new Error(
-      JSON.stringify({
-        message: ms.message,
-        status: ms.status,
-      })
-    );
+    throwCustomError(error);
   }
 
   // agregar al usuario como admin del grupo
 
-
   //Media
-
 
   return group;
 };
-
-
 
 /*
     La idea de esta funcion es que retorne el perfil de un grupo, asi como sus eventos
@@ -222,32 +185,23 @@ const createNewGroup = async ({ id_user, input, token }) => {
     }
 */
 const groupProfile = async ({ id }) => {
-
   // Obtener el grupo con el Id
   try {
-      const group = await getGroupByID({groupId : id})
-      const {name} = await getTypeById({id:group.id_type})
-      
-      // aqui agrego el campo type al esquema, de la misma forma podemos hacer con la imagen y seguidores
-      group.type = name;
-      
-      // User : Obtener los seguidores de un grupo
-      
-      // Media : Obtener la imagen del grupo
-      
-      // Events : Obteners los eventos de un grupo 
+    const group = await getGroupByID({ groupId: id });
+    const { name } = await getTypeById({ id: group.id_type });
 
+    // aqui agrego el campo type al esquema, de la misma forma podemos hacer con la imagen y seguidores
+    group.type = name;
+
+    // User : Obtener los seguidores de un grupo
+
+    // Media : Obtener la imagen del grupo
+
+    // Events : Obteners los eventos de un grupo
 
     return group;
   } catch (error) {
-    console.log(error)
-    const ms = JSON.parse(error.message);
-    throw new Error(
-      JSON.stringify({
-        message: ms.message,
-        status: ms.status,
-      })
-    );
+    throwCustomError(error);
   }
 };
 
@@ -258,7 +212,7 @@ const deleteGroup = async ({ id_user, id_event, token }) => {
   //Auth
 };
 
-module.exports = { 
+module.exports = {
   editGroup,
   allGroups,
   createNewGroup,

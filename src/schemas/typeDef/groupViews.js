@@ -1,4 +1,4 @@
-const viewsTypeDef = `
+const groupViewsTypeDef = `
   type AllGroupsSearch {
     id_group: ID!
     type: String!
@@ -24,16 +24,16 @@ const viewsTypeDef = `
   }
 `;
 
-const viewsQueries = `
+const groupViewsQueries = `
   allGroups: [AllGroupsSearch!]!
   groupProfile (id:ID!): GroupsProfileSearch
   filterGroups (name: String, id_type: Int): [AllGroupsSearch!]!
 `;
 
-const viewsMutations = `
+const groupViewsMutations = `
   editGroup(id_user: ID!,input: GroupInput, token: AccessToken): Message
   createUser(input: LogRegInput): Message
   createNewGroup (id_user:ID!, input: GroupInput, token: AccessToken ): Group
 `;
 
-module.exports = { viewsTypeDef, viewsQueries, viewsMutations };
+module.exports = { groupViewsTypeDef, groupViewsQueries, groupViewsMutations };

@@ -6,7 +6,11 @@ const {
 const { authTypeDef, authMutations, authQueries } = require("./auth");
 const { eventsTypeDef, eventsQueries, eventsMutations } = require("./events");
 const { groupsTypeDef, groupsQueries, groupsMutations } = require("./groups");
-const { viewsTypeDef, viewsQueries, viewsMutations } = require("./views");
+const {
+  groupViewsTypeDef,
+  groupViewsQueries,
+  groupViewsMutations,
+} = require("./groupViews");
 const {
   eventViewTypeDef,
   eventViewQueries,
@@ -20,7 +24,7 @@ ${authTypeDef}
 ${commentsTypeDef}
 ${groupsTypeDef}
 ${eventsTypeDef}
-${viewsTypeDef}
+${groupViewsTypeDef}
 ${eventViewTypeDef}
 
 type Mutation {
@@ -28,7 +32,7 @@ type Mutation {
     ${commentsMutations}
     ${groupsMutations}
     ${eventsMutations}
-    ${viewsMutations}
+    ${groupViewsMutations}
     ${eventViewMutations}
 }
 type Query {
@@ -36,8 +40,8 @@ type Query {
     ${commentsQueries}
     ${groupsQueries}
     ${eventsQueries}
-    ${viewsQueries}
     ${eventViewQueries}
+    ${groupViewsQueries}
 }
 `;
 

@@ -31,7 +31,6 @@ const buildEvents = async (events) => {
       const id = events[i].id;
       // events[i].followers = await followersByEvent(id);
       // events[i].photo = await eventPhoto(id);
-      // events[i].comments = await getCommentsByID(id);
     }
     return events;
   } catch (error) {
