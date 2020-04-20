@@ -61,6 +61,10 @@ const allGroups = async () => {
   }
 };
 
+
+
+
+
 const editGroup = async ({ id_user, input, token }) => {
   try {
     // const ok = await loginVerify({ input: token });
@@ -81,7 +85,29 @@ const editGroup = async ({ id_user, input, token }) => {
   }
 };
 
+
+
+
+
+
+/*
+    La funcion retorna este esquema, si lo quieren cambiar vayan a schemas/views.js
+    type GroupsProfileSearch {
+      id_group: ID
+      type: String
+      name: String
+      description: String
+      created_date: String
+      contact_number: String
+      status: String
+      followers: Int
+      events: [Event!]
+    }
+*/
 const createNewGroup = async ({ id_user, input, token }) => {
+  var group;
+
+
   // tener encuenta como se recibe IMG
   // Auth
 
@@ -90,9 +116,19 @@ const createNewGroup = async ({ id_user, input, token }) => {
   
   // Crear el grupo
   try {
-    const {data} = await createGroup({ input : input })
+    group = await createGroup({ input : input })
     // const id_group = data
+    const id_group = group.id_group;
+    const id_type = group.id_type;
 
+    
+
+
+    const {name} = await getTypeById({id:id_type})
+    group.type = name;
+
+
+    
   } catch (error) {
     
     const ms = JSON.parse(error.message);
@@ -108,6 +144,7 @@ const createNewGroup = async ({ id_user, input, token }) => {
 
 
   //Media
+  return group;
 };
 
 
@@ -123,15 +160,15 @@ const createNewGroup = async ({ id_user, input, token }) => {
 
     La funcion retorna este esquema, si lo quieren cambiar vayan a schemas/views.js
     type GroupsProfileSearch {
-      id_group: ID!
-      type: String!
-      name: String!
-      description: String!
-      created_date: String!
+      id_group: ID
+      type: String
+      name: String
+      description: String
+      created_date: String
       contact_number: String
-      status: String!
-      followers: Int!
-      events: [Event!]!
+      status: String
+      followers: Int
+      events: [Event!]
     }
 */
 const groupProfile = async ({ id }) => {
@@ -139,7 +176,7 @@ const groupProfile = async ({ id }) => {
   // Obtener el grupo con el Id
   try {
       const group = await getGroupByID({groupId : id})
-      const {name} = await getTypeById({id:group.id_group})
+      const {name} = await getTypeById({id:group.id_type})
       
       // aqui agrego el campo type al esquema, de la misma forma podemos hacer con la imagen y seguidores
       group.type = name;
@@ -176,5 +213,5 @@ module.exports = {
   allGroups,
   createNewGroup,
   groupProfile,
-  createNewGroup
+  createNewGroup,
 };

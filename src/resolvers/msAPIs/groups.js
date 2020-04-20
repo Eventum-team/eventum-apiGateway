@@ -83,11 +83,8 @@ const getGroupsByNameAndIdType = async ({ name, id_type }) => {
 
 const createGroup = async ({ input }) => {
   try {
-    const { data, status } = await axios.post(`${completeURI}`, input); // event obj structured define in resolver function
-    return {
-      message: data,
-      status: status,
-    };
+    const {data} = await axios.post(`${completeURI}`, input); // event obj structured define in resolver function
+    return data
   } catch (error) {
     throw new Error(
       JSON.stringify({

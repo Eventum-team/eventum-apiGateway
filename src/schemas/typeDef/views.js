@@ -11,15 +11,16 @@ const viewsTypeDef = `
   }
 
   type GroupsProfileSearch {
-    id_group: ID!
-    type: String!
-    name: String!
-    description: String!
-    created_date: String!
+    id_group: ID
+    id_type: Int
+    type: String
+    name: String
+    description: String
+    created_date: String
     contact_number: String
-    status: String!
-    followers: Int!
-    events: [Event!]!
+    status: String
+    followers: Int
+    events: [Event!]
   }
 `;
 
@@ -32,6 +33,7 @@ const viewsMutations = `
   editGroup(id_user: ID!,input: GroupInput, token: AccessToken): Message
   editEvent(id: ID!,input: EventInput, token: AccessToken): Message
   createUser(input: LogRegInput): Message
+  createNewGroup (id_user:ID!, input: GroupInput, token: AccessToken ): Group
 `;
 
 module.exports = { viewsTypeDef, viewsQueries, viewsMutations };

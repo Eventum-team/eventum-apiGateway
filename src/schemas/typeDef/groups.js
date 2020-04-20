@@ -1,6 +1,6 @@
 const groupsTypeDef = `
 input GroupInput {
-    id_group: Int!
+    id_group: Int
     id_type: Int!
     name: String!
     description: String!
