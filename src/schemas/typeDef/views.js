@@ -1,9 +1,31 @@
 const viewsTypeDef = `
+  type AllGroupsSearch {
+    id_group: ID!
+    type: String!
+    name: String!
+    description: String!
+    created_date: String!
+    contact_number: String
+    status: String!
+    followers: Int!
+  }
 
+  type GroupsProfileSearch {
+    id_group: ID!
+    type: String!
+    name: String!
+    description: String!
+    created_date: String!
+    contact_number: String
+    status: String!
+    followers: Int!
+    events: [Event!]!
+  }
 `;
 
 const viewsQueries = `
-
+  allGroups: [AllGroupsSearch!]!
+  groupProfile (id:ID!): GroupsProfileSearch
 `;
 
 const viewsMutations = `

@@ -16,6 +16,11 @@ type Group {
     contact_number: String
     status: String!
 }
+
+type Type {
+    id_type: ID!
+    name: String!
+}
 `;
 
 const groupsQueries = `
@@ -24,6 +29,7 @@ const groupsQueries = `
     groupsByName(name: String!):[Group!]! 
     groupsByIdType(id_type: Int!):[Group!]! 
     eventsByNameAndIdType(name: String!, id_type: Int!):[Group!]! 
+    typeById(id: ID!): Type
 `;
 
 const groupsMutations = `

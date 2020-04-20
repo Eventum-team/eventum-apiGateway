@@ -2,12 +2,12 @@ const axios = require("axios");
 const { URI } = require("../../server/msGroups");
 const completeURI = `${URI}groups`;
 const completeFilterURI = `${URI}groups/filter`;
+const completeTypeURI = `${URI}group-types`;
 
 const getAllGroups = async () => {
   try {
     console.log(completeURI);
     const { data } = await axios.get(completeURI);
-    console.log(data);
     return data;
   } catch (error) {
     throw new Error(
@@ -132,6 +132,20 @@ const deleteGroup = async ({ id }) => {
   }
 };
 
+const getTypeById = async ({id}) => {
+  try {
+    const { data } = await axios.get(`${completeTypeURI}/${id}`);
+    return data
+  } catch (error) {
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
+  }
+};
+
 module.exports = {
   getAllGroups,
   getGroupByID,
@@ -141,4 +155,5 @@ module.exports = {
   createGroup,
   updateGroup,
   deleteGroup,
+  getTypeById,
 };
