@@ -67,7 +67,7 @@ type Query {
     adminsByGroup(groupId: Int): [User!]!
     userEvents: [UserEvent!]!
     userEventByuserIdAndEventId(userId: Int, eventId: Int): UserEvent!
-    assitnatsByEvent(eventId: Int): [User!]!
+    assistantsByEvent(eventId: Int): [User!]!
     interestedByEvent(eventId: Int): [User!]!
 }
 `;

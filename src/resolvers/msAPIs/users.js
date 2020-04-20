@@ -52,7 +52,7 @@ const getAllUserGroups = async () => {
 
 const getUsersGroupByUserAndGroup = async ({ userId, groupId }) => {
   try {
-    const { data } = await axios.get(`${URIUserGroups}/${(userId, groupId)}`);
+    const { data } = await axios.get(`${URIUserGroups}/${userId}/${groupId}`);
     return data;
   } catch (error) {
     console.log(error);
@@ -95,7 +95,7 @@ const getUserEventByUserIdAndEventId = async ({ userId, eventId }) => {
   }
 };
 
-const getAssitnatUsersByEvent = async ({ eventId }) => {
+const getAssistantUsersByEvent = async ({ eventId }) => {
   try {
     const { data } = await axios.get(`${URI}assistant_events/${eventId}`);
     return data;
@@ -245,7 +245,7 @@ module.exports = {
   getAdminsByGroup,
   getAllUserEvents,
   getUserEventByUserIdAndEventId,
-  getAssitnatUsersByEvent,
+  getAssistantUsersByEvent,
   getInterestedUsersByEvent,
   createUser,
   createUserGroup,

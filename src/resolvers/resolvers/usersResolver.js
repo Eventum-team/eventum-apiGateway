@@ -34,7 +34,7 @@ const {
     adminsByGroup: getAdminsByGroup,
     userEvents: getAllUserEvents,
     userEventByuserIdAndEventId: getUserEventByUserIdAndEventId,
-    assitnatsByEvent: getAssitnatUsersByEvent,
+    assistantsByEvent: getAssistantUsersByEvent,
     interestedByEvent: getInterestedUsersByEvent,
 
     //mutations
