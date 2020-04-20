@@ -37,7 +37,7 @@ input UserGroupInputUpdate {
 }
 type UserEvent {
     user_id: Int!
-    group_id: Int!
+    event_id: Int!
     assistance: Boolean!
     interested: Boolean!
     created_at: String!
@@ -45,7 +45,7 @@ type UserEvent {
 }
 input UserEventInput {
     user_id: Int!
-    group_id: Int!
+    event_id: Int!
     assistance: Boolean!
     interested: Boolean!
 }
