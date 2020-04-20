@@ -156,6 +156,7 @@ const eventProfile = async (eventId) => {
     const id = event.id;
     //user
     //media
+    //comments
     return event;
   } catch (error) {
     throwCustomError(error);
