@@ -38,15 +38,15 @@ const eventsQueries = `
     eventByID(eventId: ID!): Event
     eventsByStatus(status: String!):[Event] 
     eventsByOwnerType(ownerType: String!):[Event] 
-    eventsByName(name: String!):[Event] 
     eventsByRangeDate(start: String!, end:String!):[Event] 
     eventsByOwnerID(type: String!, id: Int!):[Event] 
-`;
+    `;
+// eventsByName(name: String!):[Event]
 
 const eventsMutations = `
-    addEvent(input: EventInput ): Message
-    updateEvent(id: ID!,input: EventInput ): Message
-    deleteEvent(id: ID!): Message
 `;
+// updateEvent(id: ID!,input: EventInput ): Message
+// deleteEventById(id: ID!): Message
+// addEvent(input: EventInput ): Message
 
 module.exports = { eventsTypeDef, eventsQueries, eventsMutations };

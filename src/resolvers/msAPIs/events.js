@@ -82,8 +82,6 @@ const getEventsByRangeDate = async ({ start, end }) => {
     const { data } = await axios.get(
       `${completeFilterURI}/rangeDate?start=${start}&end=${end}`
     );
-    console.log(data);
-
     return data;
   } catch (error) {
     throw new Error(
@@ -111,7 +109,7 @@ const getEventsByOwnerID = async ({ type, id }) => {
   }
 };
 
-const createEvent = async ({ input }) => {
+const addEvent = async ({ input }) => {
   try {
     const { data } = await axios.post(`${completeURI}`, input); // event obj structured define in resolver function
     return data;
@@ -139,9 +137,11 @@ const updateEvent = async ({ id, input }) => {
   }
 };
 
-const deleteEvent = async ({ id }) => {
+const deleteEventById = async ({ id }) => {
   try {
     const { data } = await axios.delete(`${completeURI}/${id}`);
+    console.log(data);
+
     return data;
   } catch (error) {
     throw new Error(
@@ -161,7 +161,7 @@ module.exports = {
   getEventsByName,
   getEventsByRangeDate,
   getEventsByOwnerID,
-  createEvent,
+  addEvent,
   updateEvent,
-  deleteEvent,
+  deleteEventById,
 };

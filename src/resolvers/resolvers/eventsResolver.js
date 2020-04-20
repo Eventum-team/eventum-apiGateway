@@ -8,7 +8,7 @@ const {
   getEventsByOwnerID,
   createEvent,
   updateEvent,
-  deleteEvent,
+  deleteEventById,
 } = require("../msAPIs/events.js");
 
 // use by express-graphql in index.js
@@ -24,7 +24,7 @@ const resolvers = {
   // Mutations
   addEvent: createEvent,
   updateEvent: updateEvent,
-  deleteEvent: deleteEvent,
+  deleteEvent: deleteEventById,
 };
 
 module.exports = resolvers;
