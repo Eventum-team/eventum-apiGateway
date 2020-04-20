@@ -9,14 +9,16 @@ type User {
     phone_number: String!
     age: Int
     career: String
+    status: String
     created_at: String!
     updated_at: String!
 }
-type UserInput {
+input UserInput {
     name: String!
     phone_number: String!
     age: Int
     career: String
+    status: String
 }
 type UserGroup {
     user_id: Int!
@@ -25,12 +27,12 @@ type UserGroup {
     created_at: String!
     updated_at: String!
 }
-type UserGroupInput {
+input UserGroupInput {
     user_id: Int!
     group_id: Int!
     status: String!
 }
-type UserGroupInputUpdate {
+input UserGroupInputUpdate {
     status: String!
 }
 type UserEvent {
@@ -41,13 +43,13 @@ type UserEvent {
     created_at: String!
     updated_at: String!
 }
-type UserEventInput {
+input UserEventInput {
     user_id: Int!
     group_id: Int!
     assistance: Boolean!
     interested: Boolean!
 }
-type UserEventInputUpdate {
+input UserEventInputUpdate {
     assistance: Boolean!
     interested: Boolean!
 }
