@@ -9,6 +9,10 @@ const {
   getEventsByName,
 } = require("../../msAPIs/events");
 const { getCommentsByID } = require("../../msAPIs/comments");
+const {
+  getAssistantUsersByEvent,
+  getInterestedUsersByEvent,
+} = require("../../msAPIs/users");
 
 const tokenOutOfDate = {
   message: "Token out of date",
@@ -29,8 +33,9 @@ const buildEvents = async (events) => {
   try {
     for (let i = 0; i < events.length; i++) {
       const id = events[i].id;
-      events[i].followers = await getAssistantUsersByEvent;
+      const assistant = await getAssistantUsersByEvent;
       ({ eventId: id });
+      events[i].followers = assistant.length;
       // events[i].photo = await eventPhoto(id);
     }
     return events;
@@ -103,7 +108,7 @@ const eventsByName = async (name) => {
 
 const createEvent = async ({ input, token }) => {
   try {
-    // const ok = await loginVerify({ input: token });
+    const res = await loginVerify({ input: token });
     const ok = "ok";
     if (ok === "ok") {
       const message = await addEvent({ input: input });
@@ -118,9 +123,10 @@ const createEvent = async ({ input, token }) => {
 
 const editEvent = async ({ id, input, token }) => {
   try {
-    // const ok = await loginVerify({ input: token });
-    const ok = "ok";
-    if (ok === "ok") {
+    const idOwner = input.ownerId;
+    const idToken = await loginVerify({ input: token });
+    const ok = idToken === idOwner;
+    if (ok) {
       const message = await updateEvent({ id: id, input: input });
       return message;
     } else {
@@ -146,17 +152,17 @@ const deleteEvent = async ({ id, token }) => {
   }
 };
 
-const eventProfile = async (eventId) => {
+const eventProfile = async ({ eventId }) => {
   try {
-    const event = await getEventByID(eventId);
-    const comments = await getCommentsByID(eventId);
-    // for (let i = 0; i <= comments.length; i++) {
-    //   const id = comments.idUser;
-    //   const user = await getUserByID({ userId: id });
-    //   comments.userName = user.name;
-    // }
-    event.comments = comments;
-    // event.followers = funcion
+    const event = await getEventByID({ eventId: eventId });
+    // const comments = await getCommentsByID(eventId);
+    // event.comments = comments;
+    console.log(eventId);
+
+    const interested = await getInterestedUsersByEvent({ eventId: eventId });
+    event.interested = interested;
+    const assistant = await getAssistantUsersByEvent({ eventId: eventId });
+    event.assistant = assistant;
     return event;
   } catch (error) {
     throwCustomError(error);

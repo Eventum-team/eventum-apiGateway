@@ -1,10 +1,12 @@
 const authTypeDef = `
+
 type AuthUser {
     id: Int
     username: String
     detail: String
 }
 input LogRegInput {
+    idUser: String
     username: String
     password: String
 }

@@ -8,6 +8,8 @@ type User {
     status: String
     created_at: String!
     updated_at: String!
+    groupsFollowing: [Group]
+    eventsCreated: [Event]
 }
 input UserInput {
     name: String!

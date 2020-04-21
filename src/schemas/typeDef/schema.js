@@ -18,6 +18,11 @@ const {
 } = require("./eventView");
 // const media = require("./media");
 const { usersTypeDef, usersQueries, usersMutations } = require("./users");
+const {
+  userViewTypeDef,
+  userViewQueries,
+  userViewMutations,
+} = require("./userView");
 
 const schema = `
 ${authTypeDef}
@@ -27,6 +32,7 @@ ${eventsTypeDef}
 ${groupViewsTypeDef}
 ${eventViewTypeDef}
 ${usersTypeDef}
+${userViewTypeDef}
 
 type Mutation {
     ${authMutations}
@@ -36,6 +42,7 @@ type Mutation {
     ${groupViewsMutations}
     ${eventViewMutations}
     ${usersMutations}
+    ${userViewMutations}
 }
 type Query {
     ${authQueries}
@@ -45,6 +52,7 @@ type Query {
     ${eventViewQueries}
     ${groupViewsQueries}
     ${usersQueries}
+    ${userViewQueries}
 }
 `;
 

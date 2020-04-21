@@ -32,6 +32,8 @@ type Event {
     longitude: String
     comments: [Comment]
     followers: Int
+    assistant: [User]
+    interested: [User]
     photo: String
 }
 `;

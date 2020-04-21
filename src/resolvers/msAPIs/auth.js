@@ -12,9 +12,12 @@ const createUserAuth = async ({ input }) => {
     res.data = data;
     return res;
   } catch (error) {
-    e = Error("");
-    res.error = error;
-    return res;
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 

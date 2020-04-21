@@ -18,6 +18,7 @@ type Group {
     status: String
     followers: Int
     events: [Event]
+    admins: [User]
     photo: String
 }
 

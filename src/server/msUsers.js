@@ -1,5 +1,7 @@
-const URI = `http://localhost:3000/`;
+const ENDPOINT = `http://3.95.24.27`;
+const PORT = "3000";
+const BASEPATH = "/";
 
-console.log(URI);
+const URI = `${ENDPOINT}:${PORT}${BASEPATH}`;
 
 module.exports.URI = URI;

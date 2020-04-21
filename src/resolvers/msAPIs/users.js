@@ -6,6 +6,8 @@ const URIUserEvents = `${URI}user_events`;
 
 const getAllUsers = async () => {
   try {
+    console.log(URIUsers);
+
     const { data } = await axios.get(URIUsers);
     console.log(data);
     return data;
@@ -62,6 +64,7 @@ const getUsersGroupByUserAndGroup = async ({ userId, groupId }) => {
 const getUsersByGroup = async ({ groupId }) => {
   try {
     const { data } = await axios.get(`${URIUserGroups}/${groupId}`);
+
     return data;
   } catch (error) {
     console.log(error);

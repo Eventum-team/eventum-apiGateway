@@ -6,7 +6,13 @@ const {
   getGroupByID,
   getGroupsByNameAndIdType,
 } = require("../../msAPIs/groups");
-const { updateEvent } = require("../../msAPIs/events");
+const { updateEvent, getEventsByOwnerID } = require("../../msAPIs/events");
+const {
+  getUsersByGroup,
+  getAdminsByGroup,
+  createUserGroup,
+  getInterestedUsersByEvent,
+} = require("../../msAPIs/users");
 
 const tokenOutOfDate = {
   message: "Token out of date",
@@ -23,34 +29,30 @@ const throwCustomError = (error) => {
   );
 };
 
-
-
 /*****************************
- * 
- * La idea de esta funcion es construir la informacion que require un grupo. 
- * Se necesita 
+ *
+ * La idea de esta funcion es construir la informacion que require un grupo.
+ * Se necesita
  * - Group : La informacion de un grupo
  * - User : Obtener los seguidores de un grupo
- * - Media : Obtener la imagen del grupo  
- * 
+ * - Media : Obtener la imagen del grupo
+ *
  */
 const buildGroups = async (groups) => {
-  try{
+  try {
     for (let i = 0; i < groups.length; i++) {
       const id_group = groups[i].id_group;
       const id_type = groups[i].id_type;
       const { name } = await getTypeById({ id: id_type });
-  
-      // aqui agrego el campo type al esquema, de la misma forma podemos hacer con la imagen y seguidores
       groups[i].type = name;
-  
-      //user
-      // groups[i].followers = await ...;
-
+      const followers = await getUsersByGroup({ groupId: id_group });
+      groups[i].followers = followers.length;
+      const admins = await getAdminsByGroup({ groupId: id_group });
+      groups[i].admins = admins;
       //media
       // groups[i].photo = await ...;
     }
-  } catch (error){
+  } catch (error) {
     throwCustomError(error);
   }
   return groups;
@@ -92,9 +94,6 @@ const allGroups = async () => {
 };
 
 const editGroup = async ({ id_user, input, token }) => {
-
-  // verificar que el usuario sea administrador de ese grupo
-
   try {
     // const ok = await loginVerify({ input: token });
     if (true) {
@@ -107,35 +106,23 @@ const editGroup = async ({ id_user, input, token }) => {
   }
 };
 
-
-
-
 const createNewGroup = async ({ id_user, input, token }) => {
-  var group;
-
-  // tener encuenta como se recibe IMG
-  // Auth
-
-  // Verificar que el usuario sea administrador
-
-  // Crear el grupo
+  //validacion
   try {
-    group = await createGroup({ input: input });
+    const group = await createGroup({ input: input });
     // const id_group = data
     const id_group = group.id_group;
     const id_type = group.id_type;
-
     const { name } = await getTypeById({ id: id_type });
     group.type = name;
+    const message = await createUserGroup({
+      input: { user_id: id_user, group_id: id_group, status: "admin" },
+    });
+    return group;
+    //Media
   } catch (error) {
     throwCustomError(error);
   }
-
-  // agregar al usuario como admin del grupo
-
-  //Media
-
-  return group;
 };
 
 /*
@@ -147,11 +134,9 @@ const groupProfile = async ({ id }) => {
   // Obtener el grupo con el Id
   try {
     const group = await getGroupByID({ groupId: id });
-    const buildedGroup =  (await buildGroups([group]))[0];
-
-    // Events : Obteners los eventos de un grupo
-    // buildedGroup.events = await ...
-    
+    const buildedGroup = (await buildGroups([group]))[0];
+    const events = await getEventsByOwnerID({ type: "group", id: id });
+    buildedGroup.events = events;
     return buildedGroup;
   } catch (error) {
     throwCustomError(error);

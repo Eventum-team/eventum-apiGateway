@@ -1,21 +1,26 @@
 const { loginVerify, createUserAuth } = require("../../msAPIs/auth");
 const { getUserByID, getGroupsByUser } = require("../../msAPIs/users");
+const { getEventsByOwnerID } = require("../../msAPIs/events");
+const { getGroupByID } = require("../../msAPIs/groups");
 
 const tokenOutOfDate = {
   message: "Token out of date",
   status: 401,
 };
 
-const UserProfile = ({ id }) => {
-  // User
-  //Media
-  //Group
-  //Events
+const throwCustomError = (error) => {
+  const ms = JSON.parse(error.message);
+  throw new Error(
+    JSON.stringify({
+      message: ms.message,
+      status: ms.status,
+    })
+  );
 };
 
 // const  login = () => console.log("F");  Auth ya la tiene
 
-const createUser = async ({ input }) => {
+const UserAuthcreate = async ({ input }) => {
   //Auth
   try {
     const authData = {
@@ -54,31 +59,49 @@ const createUser = async ({ input }) => {
     console.log(error);
   }
 };
-const editProfiel = async ({ token, input }) => {
+
+const editProfile = async ({ token, input }) => {
   //Auth
+  // try {
+  //   // const ok = await loginVerify({ input: token });
+  //   if (true) {
+  //     return await
+  //   } else {
+  //     return tokenOutOfDate;
+  //   }
+  // } catch (error) {
+  //   throwCustomError(error);
+  // }
+};
+
+const userProfile = async ({ userId }) => {
   try {
-    // const ok = await loginVerify({ input: token });
-    if (true) {
-      return await updateGroup({ id: input.id_group, input: input });
-    } else {
-      return tokenOutOfDate;
+    const user = await getUserByID({ userId: userId });
+
+    const eventsCreated = await getEventsByOwnerID({
+      type: "user",
+      id: userId,
+    });
+    user.eventsCreated = eventsCreated;
+    const groupsIdFollowing = await getGroupsByUser({ userId: userId });
+    const groups = [];
+    for (let i = 0; i < groupsIdFollowing.length; i++) {
+      const group = await getGroupByID({
+        groupId: groupsIdFollowing[i].group_id,
+      });
+      groups.push(group);
     }
+
+    user.groupsFollowing = groups;
+    //media
+    return user;
   } catch (error) {
     throwCustomError(error);
   }
 };
 
-const userProfile = async (userId) => {
-  try {
-    const user = await getUserByID(eventId);
-    const eventsCreated = await getEventsByOwnerID;
-    ({ type: "user", id: userId });
-    // grupos que siguie
-    //grupos de los ques parte
-    // media
-
-    return user;
-  } catch (error) {
-    throwCustomError(error);
-  }
+module.exports = {
+  createUserAuth,
+  editProfile,
+  userProfile,
 };
