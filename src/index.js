@@ -1,75 +1,73 @@
 var express = require("express");
 var graphqlHTTP = require("express-graphql");
 var { buildSchema } = require("graphql");
+//image upload
+const multer = require('multer');
+const path = require('path');
+const { v4 : uuidv4 } = require('uuid');
 
-// Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
-  input MessageInput {
-    content: String
-    author: String
-  }
 
-  type Message {
-    id: ID!
-    content: String
-    author: String
-  }
+//eventsSchema
+var mediaSchema = require("./schemas/typeDef/media");
+var schema = buildSchema(mediaSchema);
 
-  type Query {
-    getMessage(id: ID!): Message
-  }
+var mediaResolvers = require("./resolvers/resolvers/mediaResolver");
+var root = mediaResolvers;
 
-  type Mutation {
-    createMessage(input: MessageInput): Message
-    updateMessage(id: ID!, input: MessageInput): Message
-  }
-`);
-
-// If Message had any complex fields, we'd put them on this object.
-class Message {
-  constructor(id, { content, author }) {
-    this.id = id;
-    this.content = content;
-    this.author = author;
-  }
-}
-
-// Maps username to content
-var fakeDatabase = {};
-
-var root = {
-  getMessage: ({ id }) => {
-    if (!fakeDatabase[id]) {
-      throw new Error("no message exists with id " + id);
-    }
-    return new Message(id, fakeDatabase[id]);
-  },
-  createMessage: ({ input }) => {
-    // Create a random id for our "database".
-    var id = require("crypto").randomBytes(10).toString("hex");
-
-    fakeDatabase[id] = input;
-    return new Message(id, input);
-  },
-  updateMessage: ({ id, input }) => {
-    if (!fakeDatabase[id]) {
-      throw new Error("no message exists with id " + id);
-    }
-    // This replaces all old data, but some apps might want partial update.
-    fakeDatabase[id] = input;
-    return new Message(id, input);
-  },
-};
+var image;
 
 var app = express();
+
+// Settings
+app.set('view engine', 'ejs');
+// Middleware
+const storage = multer.diskStorage({
+    destination: 'src/public/uploads',
+    filename: (req, file ,cb)=>{
+        cb(null, uuidv4() + path.extname(file.originalname).toLocaleLowerCase());
+    }
+});
+
+app.use(multer({
+    storage,
+    limits: {fileSize: 2000000},
+    fileFilter: (req, file, cb) =>{
+        const fileTypes = /jpeg|jpg|png|gif/;
+        const mimetype = fileTypes.test(file.mimetype);
+        const extname = fileTypes.test(path.extname(file.originalname));
+        if(mimetype && extname){
+            return cb(null, true);
+        }
+        cb('Error: Archivo no soportado');
+    }
+}).single('Image'));
+
 app.use(
-  "/graphql",
-  graphqlHTTP({
-    schema: schema,
-    rootValue: root,
-    graphiql: true,
-  })
+    "/graphql", graphqlHTTP({
+      schema: schema,
+      rootValue: root,
+      graphiql: true,
+    })
 );
+
+//rutas testeo
+app.get('/', (req,res) =>{
+    res.render('index');
+    console.log('index');
+});
+
+app.post('/upload1', (req,res) =>{
+    res.send(req.file.path);
+    //console.log(req.file);
+    image = req.file.path;
+    console.log(image);
+});
+
+// static files acceso desde navegador
+app.use(express.static('public'));//testeo
+
+// Start
 app.listen(3004, () => {
   console.log("Running a GraphQL API server at localhost:3004/graphql");
 });
+
