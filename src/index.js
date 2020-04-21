@@ -6,7 +6,7 @@ const schemaStructure = require("./schemas/typeDef/schema");
 const schema = buildSchema(schemaStructure);
 
 const root = require("./resolvers/resolvers/resolvers");
-const { multerStorage } = require("./middlewares/imgMiddleware");
+const { multerStorage } = require("./utils/middlewares/imgMiddleware");
 
 const app = express();
 app.set("view engine", "ejs");
@@ -49,6 +49,6 @@ app.post("/upload1", (req, res) => {
 // static files acceso desde navegador
 app.use(express.static("public")); //testeo
 
-app.listen(3000, () => {
-  console.log("Running a GraphQL API server at localhost:3000/graphql");
-});
+app.listen(3000, () =>
+  console.log("Running a GraphQL API server at localhost:3000/graphql")
+);
