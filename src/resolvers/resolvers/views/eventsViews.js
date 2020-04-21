@@ -29,18 +29,14 @@ const buildEvents = async (events) => {
   try {
     for (let i = 0; i < events.length; i++) {
       const id = events[i].id;
-      // events[i].followers = await followersByEvent(id);
+      events[i].followers = await getAssistantUsersByEvent;
+      ({ eventId: id });
       // events[i].photo = await eventPhoto(id);
     }
     return events;
   } catch (error) {
     throwCustomError(error);
   }
-};
-
-const followersByEvent = (eventId) => {
-  // User
-  return 1;
 };
 
 const eventPhoto = (eventId) => {
@@ -153,10 +149,14 @@ const deleteEvent = async ({ id, token }) => {
 const eventProfile = async (eventId) => {
   try {
     const event = await getEventByID(eventId);
-    const id = event.id;
-    //user
-    //media
-    //comments
+    const comments = await getCommentsByID(eventId);
+    // for (let i = 0; i <= comments.length; i++) {
+    //   const id = comments.idUser;
+    //   const user = await getUserByID({ userId: id });
+    //   comments.userName = user.name;
+    // }
+    event.comments = comments;
+    // event.followers = funcion
     return event;
   } catch (error) {
     throwCustomError(error);

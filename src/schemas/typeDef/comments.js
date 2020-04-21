@@ -3,6 +3,7 @@ const commentsTypeDef = `
         id: ID
         idEvent: Int!
         idUser: Int!
+        userName: String
         text: String!
         updated_at: String
         created_at: String   
