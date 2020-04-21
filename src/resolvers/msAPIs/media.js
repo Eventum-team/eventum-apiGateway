@@ -56,26 +56,40 @@ const getOneProfileGroup = async ({ id_group }) => {
   }
 };
 
-const getAllEvent = async ({ id_group, id_event }) => {
+const getAllEvent = async ({ id_type, id_event }) => {
   try {
-    const { data } = await axios.get(
-      `${completeGroupURI}/${id_group}/event/${id_event}`
-    );
+    const { data } = await axios.get(`${completeProfileURI}/${id_type}/event/${id_event}`);
     return data;
   } catch (error) {
     console.log(error);
   }
+};//user
+
+const getOneProfileEvent = async ({ id_type, id_event }) => {
+  try {
+    const { data } = await axios.get(`${completeProfileURI}/${id_type}/event/profile/${id_event}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};//user
+
+const getAllGroupEvent = async ({ id_group, id_event }) => {
+try {
+  const { data } = await axios.get(`${completeGroupURI}/${id_group}/event/${id_event}`);
+  return data;
+} catch (error) {
+  console.log(error);
+}
 };
 
-const getOneProfileEvent = async ({ id_group, id_event }) => {
-  try {
-    const { data } = await axios.get(
-      `${completeGroupURI}/${id_group}/event/profile/${id_event}`
-    );
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
+const getOneGroupProfileEvent = async ({ id_group, id_event }) => {
+try {
+  const { data } = await axios.get(`${completeGroupURI}/${id_group}/event/profile/${id_event}`);
+  return data;
+} catch (error) {
+  console.log(error);
+}
 };
 
 //upload??
@@ -131,26 +145,40 @@ const deleteGroupProfile = async ({ id_group, _id }) => {
   }
 };
 
-const deleteEvent = async ({ id_group, id_event, _id }) => {
+const deleteEvent = async ({ id_type, id_event, _id }) => {
   try {
-    const { data } = await axios.delete(
-      `${completeGroupURI}/${id_group}/event/delete/${id_event}/${_id}`
-    );
+    const { data } = await axios.delete(`${completeProfileURI}/${id_type}/event/delete/${id_event}/${_id}`);
     return data;
   } catch (error) {
     console.log(error);
   }
 };
 
-const deleteEventProfile = async ({ id_group, id_event, _id }) => {
+const deleteEventProfile = async ({ id_type, id_event, _id }) => {
   try {
-    const { data } = await axios.delete(
-      `${completeGroupURI}/${id_group}/event/delete/profile/${id_event}/${_id}`
-    );
+    const { data } = await axios.delete(`${completeProfileURI}/${id_type}/event/delete/profile/${id_event}/${_id}`);
     return data;
   } catch (error) {
     console.log(error);
   }
+};
+
+const deleteGroupEvent = async ({ id_group, id_event, _id }) => {
+try {
+  const { data } = await axios.delete(`${completeGroupURI}/${id_group}/event/delete/${id_event}/${_id}`);
+  return data;
+} catch (error) {
+  console.log(error);
+}
+};
+
+const deleteGroupEventProfile = async ({ id_group, id_event, _id }) => {
+try {
+  const { data } = await axios.delete(`${completeGroupURI}/${id_group}/event/delete/profile/${id_event}/${_id}`);
+  return data;
+} catch (error) {
+  console.log(error);
+}
 };
 
 module.exports = {
@@ -160,10 +188,14 @@ module.exports = {
   getOneProfileGroup,
   getAllEvent,
   getOneProfileEvent,
+  getAllGroupEvent,
+  getOneGroupProfileEvent,
   createImage,
   deleteUserProfile,
   deleteGroup,
   deleteGroupProfile,
   deleteEvent,
   deleteEventProfile,
+  deleteGroupEvent,
+  deleteGroupEventProfile
 };
