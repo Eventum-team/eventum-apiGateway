@@ -1,42 +1,16 @@
 const express = require("express");
 const graphqlHTTP = require("express-graphql");
 const { buildSchema } = require("graphql");
-const multer = require("multer");
-const path = require("path");
-const { v4: uuidv4 } = require("uuid");
 
 const schemaStructure = require("./schemas/typeDef/schema");
 const schema = buildSchema(schemaStructure);
 
 const root = require("./resolvers/resolvers/resolvers");
+const { multerStorage } = require("./imgResolvers/imgResolver");
 
 const app = express();
-
-// Settings
 app.set("view engine", "ejs");
-// Middleware
-const storage = multer.diskStorage({
-  destination: "src/public/uploads",
-  filename: (req, file, cb) => {
-    cb(null, uuidv4() + path.extname(file.originalname).toLocaleLowerCase());
-  },
-});
-app.use(
-  multer({
-    storage,
-    limits: { fileSize: 2000000 },
-    fileFilter: (req, file, cb) => {
-      const fileTypes = /jpeg|jpg|png|gif/;
-      const mimetype = fileTypes.test(file.mimetype);
-      const extname = fileTypes.test(path.extname(file.originalname));
-      if (mimetype && extname) {
-        return cb(null, true);
-      }
-      cb("Error: Archivo no soportado");
-    },
-  }).single("Image")
-);
-
+app.use(multerStorage);
 app.use(
   "/graphql",
   graphqlHTTP({
@@ -69,6 +43,7 @@ app.get("/", (req, res) => {
 
 app.post("/upload1", (req, res) => {
   res.send(req.file.path);
+  // log(req.);
 });
 
 // static files acceso desde navegador

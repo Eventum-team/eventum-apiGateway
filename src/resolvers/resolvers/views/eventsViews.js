@@ -14,6 +14,8 @@ const {
   getInterestedUsersByEvent,
 } = require("../../msAPIs/users");
 
+const { getAllEvent } = require("../../msAPIs/media");
+
 const tokenOutOfDate = {
   message: "Token out of date",
   status: 401,
@@ -36,6 +38,7 @@ const buildEvents = async (events) => {
       const assistant = await getAssistantUsersByEvent;
       ({ eventId: id });
       events[i].followers = assistant.length;
+      // const photos = await getAllEvent({});
       // events[i].photo = await eventPhoto(id);
     }
     return events;

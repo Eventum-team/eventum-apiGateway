@@ -6,9 +6,9 @@ type Message {
 input EventInput {
     id: ID
     ownerType: String
+    ownerId: Int!
     status: String
     eventType: String
-    ownerId: Int!
     name: String!
     eventStartDate: String!
     eventFinishDate: String!
