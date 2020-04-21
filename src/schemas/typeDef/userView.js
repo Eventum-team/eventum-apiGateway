@@ -6,7 +6,7 @@ userProfile(userId: Int): User
   `;
 
 const userViewMutations = `
-  UserAuthcreate(input: UserInput): Message
+userAuthcreate(input: UserInput): Message
 editProfile(input: UserInput): Message
 `;
 

@@ -1,6 +1,7 @@
 const usersTypeDef = `
 type User {
     id: ID!
+    
     name: String!
     phone_number: String!
     age: Int
@@ -12,6 +13,8 @@ type User {
     eventsCreated: [Event]
 }
 input UserInput {
+    username: String
+    password: String
     name: String!
     phone_number: String!
     age: Int

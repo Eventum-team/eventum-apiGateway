@@ -125,6 +125,7 @@ const editEvent = async ({ id, input, token }) => {
   try {
     const idOwner = input.ownerId;
     const idToken = await loginVerify({ input: token });
+    //to idOwner to string
     const ok = idToken === idOwner;
     if (ok) {
       const message = await updateEvent({ id: id, input: input });
@@ -139,7 +140,7 @@ const editEvent = async ({ id, input, token }) => {
 
 const deleteEvent = async ({ id, token }) => {
   try {
-    // const ok = await loginVerify({ input: token });
+    // const idUser = await loginVerify({ input: token });
     const ok = "ok";
     if (ok === "ok") {
       const message = await deleteEventById({ id: id });

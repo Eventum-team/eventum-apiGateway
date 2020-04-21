@@ -1,5 +1,9 @@
 const { loginVerify, createUserAuth } = require("../../msAPIs/auth");
-const { getUserByID, getGroupsByUser } = require("../../msAPIs/users");
+const {
+  getUserByID,
+  getGroupsByUser,
+  createUser,
+} = require("../../msAPIs/users");
 const { getEventsByOwnerID } = require("../../msAPIs/events");
 const { getGroupByID } = require("../../msAPIs/groups");
 
@@ -20,41 +24,30 @@ const throwCustomError = (error) => {
 
 // const  login = () => console.log("F");  Auth ya la tiene
 
-const UserAuthcreate = async ({ input }) => {
-  //Auth
+const userAuthcreate = async ({ input }) => {
   try {
+    const userData = {
+      input: {
+        name: input.name,
+        phone_number: input.phone_number,
+        age: input.age,
+        career: input.career,
+        status: input.status,
+      },
+    };
+
+    const r = await createUser(userData);
+    const idUser = r.message.split(" ");
     const authData = {
       input: {
         username: input.username,
         password: input.password,
+        idUser: idUser[idUser.length - 1],
       },
     };
-    const res = await createUserAuth(authData, id);
 
-    if (Object.keys(res.data).length !== 0) {
-      console.log("ms-user");
-      return {
-        message: "User created successfully",
-        status: 201,
-      };
-    }
-    switch (res.error.response.status) {
-      case 500:
-        return {
-          message: "User already created",
-          status: res.error.response.status,
-        };
-      case 400:
-        return {
-          message: "Invalid Fields",
-          status: res.error.response.status,
-        };
-      default:
-        return {
-          message: resp.error.response.statusText,
-          status: res.error.response.status,
-        };
-    }
+    const res = await createUserAuth(authData);
+    return res;
   } catch (error) {
     console.log(error);
   }
@@ -101,7 +94,7 @@ const userProfile = async ({ userId }) => {
 };
 
 module.exports = {
-  createUserAuth,
+  userAuthcreate,
   editProfile,
   userProfile,
 };
