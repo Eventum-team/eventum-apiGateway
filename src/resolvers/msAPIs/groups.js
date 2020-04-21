@@ -6,7 +6,6 @@ const completeTypeURI = `${URI}group-types`;
 
 const getAllGroups = async () => {
   try {
-    console.log(completeURI);
     const { data } = await axios.get(completeURI);
     return data;
   } catch (error) {
@@ -67,10 +66,11 @@ const getGroupsByIdType = async ({ id_type }) => {
 
 const getGroupsByNameAndIdType = async ({ name, id_type }) => {
   try {
-    if (name === undefined && id_type === undefined) {  
+    if (name === undefined && id_type === undefined) {
       const { data } = await axios.get(completeURI);
       return data;
-    } if (name === undefined){
+    }
+    if (name === undefined) {
       const { data } = await axios.get(
         `${completeFilterURI}?name=&id_type=${id_type}`
       );
@@ -98,8 +98,8 @@ const getGroupsByNameAndIdType = async ({ name, id_type }) => {
 
 const createGroup = async ({ input }) => {
   try {
-    const {data} = await axios.post(`${completeURI}`, input); // event obj structured define in resolver function
-    return data
+    const { data } = await axios.post(`${completeURI}`, input); // event obj structured define in resolver function
+    return data;
   } catch (error) {
     throw new Error(
       JSON.stringify({
@@ -144,10 +144,10 @@ const deleteGroup = async ({ id }) => {
   }
 };
 
-const getTypeById = async ({id}) => {
+const getTypeById = async ({ id }) => {
   try {
     const { data } = await axios.get(`${completeTypeURI}/${id}`);
-    return data
+    return data;
   } catch (error) {
     throw new Error(
       JSON.stringify({

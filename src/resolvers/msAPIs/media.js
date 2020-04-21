@@ -52,7 +52,12 @@ const getOneProfileGroup = async ({ id_group }) => {
     const { data } = await axios.get(`${completeGroupURI}/profile/${id_group}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -63,7 +68,12 @@ const getAllEvent = async ({ id_group, id_event }) => {
     );
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -74,17 +84,18 @@ const getOneProfileEvent = async ({ id_group, id_event }) => {
     );
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
 //upload??
 const createImage = async ({ input }) => {
   try {
-    console.log(input);
-    //const obj = JSON.parse(JSON.stringify(input));
-    //console.log(obj);
-    console.log(`${completeURI}/upload`);
     const { data } = await axios.post(`${completeURI}/upload`, input);
     //console.log(data);
     return data;
@@ -105,7 +116,12 @@ const deleteUserProfile = async ({ id_type, _id }) => {
     );
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -116,7 +132,12 @@ const deleteGroup = async ({ id_group, _id }) => {
     );
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -127,7 +148,12 @@ const deleteGroupProfile = async ({ id_group, _id }) => {
     );
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -138,7 +164,12 @@ const deleteEvent = async ({ id_group, id_event, _id }) => {
     );
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -149,7 +180,12 @@ const deleteEventProfile = async ({ id_group, id_event, _id }) => {
     );
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 

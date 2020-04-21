@@ -6,13 +6,15 @@ const URIUserEvents = `${URI}user_events`;
 
 const getAllUsers = async () => {
   try {
-    console.log(URIUsers);
-
     const { data } = await axios.get(URIUsers);
-    console.log(data);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -21,7 +23,12 @@ const getUserByID = async ({ userId }) => {
     const { data } = await axios.get(`${URIUsers}/${userId}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -30,7 +37,12 @@ const getGroupsByUser = async ({ userId }) => {
     const { data } = await axios.get(`${URI}groups_by_user/${userId}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -39,7 +51,12 @@ const getEventsByUser = async ({ userId }) => {
     const { data } = await axios.get(`${URI}events_by_user/${userId}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -48,7 +65,12 @@ const getAllUserGroups = async () => {
     const { data } = await axios.get(URIUserGroups);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -57,7 +79,12 @@ const getUsersGroupByUserAndGroup = async ({ userId, groupId }) => {
     const { data } = await axios.get(`${URIUserGroups}/${userId}/${groupId}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -67,7 +94,12 @@ const getUsersByGroup = async ({ groupId }) => {
 
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -76,7 +108,12 @@ const getAdminsByGroup = async ({ groupId }) => {
     const { data } = await axios.get(`${URI}admin_groups/${groupId}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -85,7 +122,12 @@ const getAllUserEvents = async () => {
     const { data } = await axios.get(`${URIUserEvents}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -94,7 +136,12 @@ const getUserEventByUserIdAndEventId = async ({ userId, eventId }) => {
     const { data } = await axios.get(`${URIUserEvents}/${userId}/${eventId}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -103,7 +150,12 @@ const getAssistantUsersByEvent = async ({ eventId }) => {
     const { data } = await axios.get(`${URI}assistant_events/${eventId}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -112,7 +164,12 @@ const getInterestedUsersByEvent = async ({ eventId }) => {
     const { data } = await axios.get(`${URI}interested_events/${eventId}`);
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -124,7 +181,12 @@ const createUser = async ({ input }) => {
       status: status,
     };
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -136,7 +198,12 @@ const createUserGroup = async ({ input }) => {
       status: status,
     };
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -148,20 +215,29 @@ const createUserEvent = async ({ input }) => {
       status: status,
     };
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
 const updateUser = async ({ userId, input }) => {
   try {
     const { data, status } = await axios.put(`${URIUsers}/${userId}`, input);
-    console.log(data);
     return {
       message: data,
       status: status,
     };
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -171,13 +247,17 @@ const updateUserGroup = async ({ userId, groupId, input }) => {
       `${URIUserGroups}/${userId}/${groupId}`,
       input
     );
-    console.log(data);
     return {
       message: data,
       status: status,
     };
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -187,13 +267,17 @@ const updateUserEvent = async ({ userId, eventId, input }) => {
       `${URIUserEvents}/${userId}/${eventId}`,
       input
     );
-    console.log(data);
     return {
       message: data,
       status: status,
     };
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -205,7 +289,12 @@ const deleteUser = async ({ userId }) => {
       status: status,
     };
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -219,7 +308,12 @@ const deleteUserGroup = async ({ userId, groupId }) => {
       status: status,
     };
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -233,7 +327,12 @@ const deleteUserEvent = async ({ userId, eventId }) => {
       status: status,
     };
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 

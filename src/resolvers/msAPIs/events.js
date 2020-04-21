@@ -140,8 +140,6 @@ const updateEvent = async ({ id, input }) => {
 const deleteEventById = async ({ id }) => {
   try {
     const { data } = await axios.delete(`${completeURI}/${id}`);
-    console.log(data);
-
     return data;
   } catch (error) {
     throw new Error(

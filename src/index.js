@@ -6,7 +6,7 @@ const schemaStructure = require("./schemas/typeDef/schema");
 const schema = buildSchema(schemaStructure);
 
 const root = require("./resolvers/resolvers/resolvers");
-const { multerStorage } = require("./imgResolvers/imgResolver");
+const { multerStorage } = require("./middlewares/imgMiddleware");
 
 const app = express();
 app.set("view engine", "ejs");

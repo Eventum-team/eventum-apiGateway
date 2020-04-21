@@ -1,7 +1,8 @@
-FROM node:10
-WORKDIR /usr/src/app
-COPY package*.json ./
+FROM node:carbon-slim
+WORKDIR /ev-apigateway
+COPY package*.json /ev-apigateway/
 RUN npm install
-COPY . .
+
+COPY . /ev-apigateway/
 EXPOSE 3000
 CMD ["npm", "start"]

@@ -9,8 +9,6 @@ const usersViews = require("./views/usersViews");
 const userViews = require("./views/usersViews");
 const media = require("./mediaResolvers");
 
-// const media = require("./mediaResolvers");
-
 const resolvers = {
   ...comments,
   ...auth,
