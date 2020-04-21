@@ -5,6 +5,7 @@ const {
   createGroup,
   getGroupByID,
   getGroupsByNameAndIdType,
+  deleteGroup,
 } = require("../../msAPIs/groups");
 const { updateEvent, getEventsByOwnerID } = require("../../msAPIs/events");
 const {
@@ -44,6 +45,7 @@ const buildGroups = async (groups) => {
       const id_group = groups[i].id_group;
       const id_type = groups[i].id_type;
       const { name } = await getTypeById({ id: id_type });
+      console.log(name);
       groups[i].type = name;
       const followers = await getUsersByGroup({ groupId: id_group });
       groups[i].followers = followers.length;
@@ -143,11 +145,17 @@ const groupProfile = async ({ id }) => {
   }
 };
 
-const deleteGroup = async ({ id_user, id_event, token }) => {
+const deleteGroupAuth = async ({ id_user, id_group, token }) => {
   // tener encuenta como se recibe IMG
-  //Groups
-  //Media
-  //Auth
+  try {
+    // Auth
+    const response = await deleteGroup({id: id_group});
+
+    // Media : borrar la foto asignada a id_group
+    return response;
+  } catch (error) {
+    throwCustomError(error);
+  }
 };
 
 module.exports = {
@@ -157,4 +165,5 @@ module.exports = {
   groupProfile,
   createNewGroup,
   filterGroups,
+  deleteGroupAuth,
 };
