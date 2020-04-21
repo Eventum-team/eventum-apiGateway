@@ -23,25 +23,45 @@ const throwCustomError = (error) => {
   );
 };
 
+
+
+/*****************************
+ * 
+ * La idea de esta funcion es construir la informacion que require un grupo. 
+ * Se necesita 
+ * - Group : La informacion de un grupo
+ * - User : Obtener los seguidores de un grupo
+ * - Media : Obtener la imagen del grupo  
+ * 
+ */
+const buildGroups = async (groups) => {
+  try{
+    for (let i = 0; i < groups.length; i++) {
+      const id_group = groups[i].id_group;
+      const id_type = groups[i].id_type;
+      const { name } = await getTypeById({ id: id_type });
+  
+      // aqui agrego el campo type al esquema, de la misma forma podemos hacer con la imagen y seguidores
+      groups[i].type = name;
+  
+      //user
+      // groups[i].followers = await ...;
+
+      //media
+      // groups[i].photo = await ...;
+    }
+  } catch (error){
+    throwCustomError(error);
+  }
+  return groups;
+};
+
 /*
     La idea de esta funcion es que filtre los grupos por id_type y nombre.
     Se necesita:
       - La informacion de los grupos filtrados (ms Grupos)
       - La cantidad de seguidores que tiene un grupo (ms Usuarios)
       - La imagen del grupo (ms medios)
-
-
-    La funcion retorna este esquema, si lo quieren cambiar vayan a schemas/views.js
-    type AllGroupsSearch {
-      id_group: ID!
-      type: String!
-      name: String!
-      description: String!
-      created_date: String!
-      contact_number: String
-      status: String!
-      followers: Int!
-    }
 */
 const filterGroups = async ({ id_type, name }) => {
   try {
@@ -49,19 +69,7 @@ const filterGroups = async ({ id_type, name }) => {
       id_type: id_type,
       name: name,
     });
-    for (let i = 0; i < groups.length; i++) {
-      const id_group = groups[i].id_group;
-      const id_type = groups[i].id_type;
-      const { name } = await getTypeById({ id: id_type });
-
-      // aqui agrego el campo type al esquema, de la misma forma podemos hacer con la imagen y seguidores
-      groups[i].type = name;
-
-      //user
-      //media
-    }
-
-    return groups;
+    return await buildGroups(groups);
   } catch (error) {
     throwCustomError(error);
   }
@@ -73,41 +81,20 @@ const filterGroups = async ({ id_type, name }) => {
       - La informacion de todos los grupos (ms Grupos)
       - La cantidad de seguidores que tiene un grupo (ms Usuarios)
       - La imagen del grupo (ms medios)
-
-
-    La funcion retorna este esquema, si lo quieren cambiar vayan a schemas/views.js
-    type AllGroupsSearch {
-      id_group: ID!
-      type: String!
-      name: String!
-      description: String!
-      created_date: String!
-      contact_number: String
-      status: String!
-      followers: Int!
-    }
 */
 const allGroups = async () => {
   try {
     const groups = await getAllGroups();
-    for (let i = 0; i < groups.length; i++) {
-      const id_group = groups[i].id_group;
-      const id_type = groups[i].id_type;
-      const { name } = await getTypeById({ id: id_type });
-
-      // aqui agrego el campo type al esquema, de la misma forma podemos hacer con la imagen y seguidores
-      groups[i].type = name;
-
-      //user
-      //media
-    }
-    return groups;
+    return await buildGroups(groups);
   } catch (error) {
     throwCustomError(error);
   }
 };
 
 const editGroup = async ({ id_user, input, token }) => {
+
+  // verificar que el usuario sea administrador de ese grupo
+
   try {
     // const ok = await loginVerify({ input: token });
     if (true) {
@@ -120,20 +107,9 @@ const editGroup = async ({ id_user, input, token }) => {
   }
 };
 
-/*
-    La funcion retorna este esquema, si lo quieren cambiar vayan a schemas/views.js
-    type GroupsProfileSearch {
-      id_group: ID
-      type: String
-      name: String
-      description: String
-      created_date: String
-      contact_number: String
-      status: String
-      followers: Int
-      events: [Event!]
-    }
-*/
+
+
+
 const createNewGroup = async ({ id_user, input, token }) => {
   var group;
 
@@ -165,41 +141,18 @@ const createNewGroup = async ({ id_user, input, token }) => {
 /*
     La idea de esta funcion es que retorne el perfil de un grupo, asi como sus eventos
     Se necesita:
-      - Group : La informacion de un grupo
-      - User : Obtener los seguidores de un grupo
-      - Media : Obtener la imagen del grupo  
       - Events : Obteners los eventos de un grupo 
-
-
-    La funcion retorna este esquema, si lo quieren cambiar vayan a schemas/views.js
-    type GroupsProfileSearch {
-      id_group: ID
-      type: String
-      name: String
-      description: String
-      created_date: String
-      contact_number: String
-      status: String
-      followers: Int
-      events: [Event!]
-    }
 */
 const groupProfile = async ({ id }) => {
   // Obtener el grupo con el Id
   try {
     const group = await getGroupByID({ groupId: id });
-    const { name } = await getTypeById({ id: group.id_type });
-
-    // aqui agrego el campo type al esquema, de la misma forma podemos hacer con la imagen y seguidores
-    group.type = name;
-
-    // User : Obtener los seguidores de un grupo
-
-    // Media : Obtener la imagen del grupo
+    const buildedGroup =  (await buildGroups([group]))[0];
 
     // Events : Obteners los eventos de un grupo
-
-    return group;
+    // buildedGroup.events = await ...
+    
+    return buildedGroup;
   } catch (error) {
     throwCustomError(error);
   }

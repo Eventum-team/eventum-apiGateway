@@ -8,13 +8,17 @@ input GroupInput {
     status: String!
 }
 type Group {
-    id_group: ID!
-    id_type: Int!
-    name: String!
-    description: String!
-    created_date: String!
+    id_group: ID
+    id_type: Int
+    type: String
+    name: String
+    description: String
+    created_date: String
     contact_number: String
-    status: String!
+    status: String
+    followers: Int
+    events: [Event]
+    photo: String
 }
 
 type Type {
