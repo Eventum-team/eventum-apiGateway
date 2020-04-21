@@ -1,3 +1,7 @@
+const { throwCustomError } = require("../../../utils/errors");
+const { tokenOutOfDate } = require("../../../utils/messages");
+const { getEventsByOwnerID } = require("../../msAPIs/events");
+
 const {
   updateGroup,
   getTypeById,
@@ -6,7 +10,7 @@ const {
   getGroupByID,
   getGroupsByNameAndIdType,
 } = require("../../msAPIs/groups");
-const { updateEvent, getEventsByOwnerID } = require("../../msAPIs/events");
+
 const {
   getUsersByGroup,
   getAdminsByGroup,
@@ -14,19 +18,13 @@ const {
   getInterestedUsersByEvent,
 } = require("../../msAPIs/users");
 
-const tokenOutOfDate = {
-  message: "Token out of date",
-  status: 401,
-};
-
-const throwCustomError = (error) => {
-  const ms = JSON.parse(error.message);
-  throw new Error(
-    JSON.stringify({
-      message: ms.message,
-      status: ms.status,
-    })
-  );
+const validToken = async (token, id) => {
+  try {
+    const idToken = await loginVerify({ input: token });
+    return idToken === id.toISOString();
+  } catch (error) {
+    throwCustomError(error);
+  }
 };
 
 /*****************************
@@ -95,8 +93,8 @@ const allGroups = async () => {
 
 const editGroup = async ({ id_user, input, token }) => {
   try {
-    // const ok = await loginVerify({ input: token });
-    if (true) {
+    const isAdmin = true;
+    if (validToken(token, id_user) && isAdmin) {
       return await updateGroup({ id: input.id_group, input: input });
     } else {
       return tokenOutOfDate;
@@ -148,6 +146,17 @@ const deleteGroup = async ({ id_user, id_event, token }) => {
   //Groups
   //Media
   //Auth
+  try {
+    const isAdmin = true;
+    if (validToken(token, id_user) && isAdmin) {
+      // const message = await DELETE GROUP;
+      return message;
+    } else {
+      return tokenOutOfDate;
+    }
+  } catch (error) {
+    throwCustomError(error);
+  }
 };
 
 module.exports = {

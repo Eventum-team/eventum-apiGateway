@@ -1,3 +1,5 @@
+const { throwCustomError } = require("../../../utils/errors");
+const { tokenOutOfDate } = require("../../../utils/messages");
 const { loginVerify, createUserAuth } = require("../../msAPIs/auth");
 const {
   getUserByID,
@@ -6,23 +8,6 @@ const {
 } = require("../../msAPIs/users");
 const { getEventsByOwnerID } = require("../../msAPIs/events");
 const { getGroupByID } = require("../../msAPIs/groups");
-
-const tokenOutOfDate = {
-  message: "Token out of date",
-  status: 401,
-};
-
-const throwCustomError = (error) => {
-  const ms = JSON.parse(error.message);
-  throw new Error(
-    JSON.stringify({
-      message: ms.message,
-      status: ms.status,
-    })
-  );
-};
-
-// const  login = () => console.log("F");  Auth ya la tiene
 
 const userAuthcreate = async ({ input }) => {
   try {
@@ -35,7 +20,6 @@ const userAuthcreate = async ({ input }) => {
         status: input.status,
       },
     };
-
     const r = await createUser(userData);
     const idUser = r.message.split(" ");
     const authData = {
@@ -45,7 +29,6 @@ const userAuthcreate = async ({ input }) => {
         idUser: idUser[idUser.length - 1],
       },
     };
-
     const res = await createUserAuth(authData);
     return res;
   } catch (error) {
@@ -54,17 +37,16 @@ const userAuthcreate = async ({ input }) => {
 };
 
 const editProfile = async ({ token, input }) => {
-  //Auth
-  // try {
-  //   // const ok = await loginVerify({ input: token });
-  //   if (true) {
-  //     return await
-  //   } else {
-  //     return tokenOutOfDate;
-  //   }
-  // } catch (error) {
-  //   throwCustomError(error);
-  // }
+  try {
+    if (validToken(token, input.id)) {
+      const message = await updateEvent({ id: id, input: input });
+      return message;
+    } else {
+      return tokenOutOfDate;
+    }
+  } catch (error) {
+    throwCustomError(error);
+  }
 };
 
 const userProfile = async ({ userId }) => {

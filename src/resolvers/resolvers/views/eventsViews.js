@@ -1,3 +1,8 @@
+const { throwCustomError } = require("../../../utils/errors");
+const { tokenOutOfDate } = require("../../../utils/messages");
+const { getCommentsByID } = require("../../msAPIs/comments");
+const { getAllEvent } = require("../../msAPIs/media");
+
 const {
   getEventsByRangeDate,
   getAllEvents,
@@ -8,27 +13,19 @@ const {
   getEventByID,
   getEventsByName,
 } = require("../../msAPIs/events");
-const { getCommentsByID } = require("../../msAPIs/comments");
+
 const {
   getAssistantUsersByEvent,
   getInterestedUsersByEvent,
 } = require("../../msAPIs/users");
 
-const { getAllEvent } = require("../../msAPIs/media");
-
-const tokenOutOfDate = {
-  message: "Token out of date",
-  status: 401,
-};
-
-const throwCustomError = (error) => {
-  const ms = JSON.parse(error.message);
-  throw new Error(
-    JSON.stringify({
-      message: ms.message,
-      status: ms.status,
-    })
-  );
+const validToken = async (token, id) => {
+  try {
+    const idToken = await loginVerify({ input: token });
+    return idToken === id.toISOString();
+  } catch (error) {
+    throwCustomError(error);
+  }
 };
 
 const buildEvents = async (events) => {
@@ -111,14 +108,8 @@ const eventsByName = async (name) => {
 
 const createEvent = async ({ input, token }) => {
   try {
-    const res = await loginVerify({ input: token });
-    const ok = "ok";
-    if (ok === "ok") {
-      const message = await addEvent({ input: input });
-      return message;
-    } else {
-      return tokenOutOfDate;
-    }
+    const message = await addEvent({ input: input });
+    return message;
   } catch (error) {
     throwCustomError(error);
   }
@@ -126,11 +117,7 @@ const createEvent = async ({ input, token }) => {
 
 const editEvent = async ({ id, input, token }) => {
   try {
-    const idOwner = input.ownerId;
-    const idToken = await loginVerify({ input: token });
-    //to idOwner to string
-    const ok = idToken === idOwner;
-    if (ok) {
+    if (validToken(token, input.ownerId)) {
       const message = await updateEvent({ id: id, input: input });
       return message;
     } else {
@@ -141,11 +128,9 @@ const editEvent = async ({ id, input, token }) => {
   }
 };
 
-const deleteEvent = async ({ id, token }) => {
+const deleteEvent = async ({ id, token, ownerId }) => {
   try {
-    // const idUser = await loginVerify({ input: token });
-    const ok = "ok";
-    if (ok === "ok") {
+    if (validToken(token, ownerId)) {
       const message = await deleteEventById({ id: id });
       return message;
     } else {
@@ -161,8 +146,6 @@ const eventProfile = async ({ eventId }) => {
     const event = await getEventByID({ eventId: eventId });
     // const comments = await getCommentsByID(eventId);
     // event.comments = comments;
-    console.log(eventId);
-
     const interested = await getInterestedUsersByEvent({ eventId: eventId });
     event.interested = interested;
     const assistant = await getAssistantUsersByEvent({ eventId: eventId });

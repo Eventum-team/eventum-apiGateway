@@ -12,7 +12,7 @@ const eventViewQueries = `
 const eventViewMutations = `
   createEvent(token: AccessToken,input: EventInput): Message
   editEvent(token: AccessToken,input: EventInput, id:ID!): Message
-  deleteEvent(token: AccessToken,id: ID!): Message
+  deleteEvent(token: AccessToken,id: ID!,ownerId: ID!): Message
 `;
 
 module.exports = { eventViewTypeDef, eventViewQueries, eventViewMutations };
