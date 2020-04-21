@@ -1,10 +1,11 @@
 const axios = require("axios");
 const URI = require("../../server/msComments");
 const completeURI = `${URI}comment`;
+const completeURIReact = `${URI}react`;
 
-const getCommentsByID = async ({ eventId }) => {
+const getCommentsByID = async ({ eventId, usrId }) => {
   try {
-    const { data } = await axios.get(`${completeURI}/${eventId}`);
+    const { data } = await axios.get(`${completeURI}/${eventId}/${usrId}`);
     return data;
   } catch (error) {
     console.log(error);
@@ -38,9 +39,33 @@ const deleteComment = async ({ id }) => {
   }
 };
 
+const reactComment = async ({ input }) => {
+  try {
+    const { data } = await axios.post(`${completeURIReact}`, input); // event obj structured define in resolver function
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const unreactComment = async ({ id, idusr }) => {
+  try {
+    const { data } = await axios.delete(`${completeURIReact}/${id}/${idusr}`);
+    console.log(id);
+    console.log(idusr);
+    console.log(data);
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   getCommentsByID,
   createComment,
   updateComment,
   deleteComment,
+  reactComment,
+  unreactComment
 };

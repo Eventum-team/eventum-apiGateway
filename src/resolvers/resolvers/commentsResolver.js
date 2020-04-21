@@ -3,6 +3,8 @@ const {
     createComment,
     updateComment,
     deleteComment,
+    reactComment,
+    unreactComment
   } = require("../msAPIs/comments.js");
   
   // use by express-graphql in index.js
@@ -11,6 +13,8 @@ const {
     getComments: getCommentsByID,
     // Mutations
     addComment: createComment,
+    react: reactComment,
+    unreact: unreactComment,
     updateComment: updateComment,
     deleteComment: deleteComment,
   };
