@@ -16,7 +16,7 @@ const {
   eventViewQueries,
   eventViewMutations,
 } = require("./eventView");
-// const media = require("./media");
+const { mediaTypeDef, mediaMutations, mediaQueries } = require("./media");
 const { usersTypeDef, usersQueries, usersMutations } = require("./users");
 const {
   userViewTypeDef,
@@ -33,6 +33,7 @@ ${groupViewsTypeDef}
 ${eventViewTypeDef}
 ${usersTypeDef}
 ${userViewTypeDef}
+${mediaTypeDef}
 
 type Mutation {
     ${authMutations}
@@ -43,6 +44,7 @@ type Mutation {
     ${eventViewMutations}
     ${usersMutations}
     ${userViewMutations}
+    ${mediaMutations}
 }
 type Query {
     ${authQueries}
@@ -53,6 +55,7 @@ type Query {
     ${groupViewsQueries}
     ${usersQueries}
     ${userViewQueries}
+    ${mediaQueries}
 }
 `;
 
