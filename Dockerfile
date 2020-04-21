@@ -1,5 +1,6 @@
 FROM node:carbon-slim
 WORKDIR /ev-apigateway
+
 COPY package*.json /ev-apigateway/
 RUN npm install
 
