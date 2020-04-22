@@ -5,7 +5,7 @@ const eventViewQueries = `
   todayEvents: [Event]
   allEvents: [Event]
   eventsByGroup(id_group: ID!): [Event] 
-  eventProfile(eventId: ID!): Event
+  eventProfile(eventId: ID!, userId: ID!): Event
   eventsByName(name: String!): [Event]
   `;
 

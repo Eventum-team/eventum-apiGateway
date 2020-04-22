@@ -141,11 +141,11 @@ const deleteEvent = async ({ id, token, ownerId }) => {
   }
 };
 
-const eventProfile = async ({ eventId }) => {
+const eventProfile = async ({ eventId, userId }) => {
   try {
     const event = await getEventByID({ eventId: eventId });
-    // const comments = await getCommentsByID(eventId);
-    // event.comments = comments;
+    const comments = await getCommentsByID({ eventId: eventId, usrId: userId });
+    event.comments = comments;
     const interested = await getInterestedUsersByEvent({ eventId: eventId });
     event.interested = interested;
     const assistant = await getAssistantUsersByEvent({ eventId: eventId });

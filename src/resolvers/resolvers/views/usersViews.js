@@ -1,5 +1,6 @@
 const { throwCustomError } = require("../../../utils/errors");
 const { tokenOutOfDate } = require("../../../utils/messages");
+const { getOneProfile } = require("../../msAPIs/media");
 const { loginVerify, createUserAuth } = require("../../msAPIs/auth");
 const {
   getUserByID,
@@ -68,7 +69,10 @@ const userProfile = async ({ userId }) => {
     }
 
     user.groupsFollowing = groups;
-    //media
+    const image = await getOneProfile({ id_type: userId });
+    console.log(image);
+
+    user.photo = image[0].path;
     return user;
   } catch (error) {
     throwCustomError(error);

@@ -125,7 +125,7 @@ const addEvent = async ({ input }) => {
 
 const updateEvent = async ({ id, input }) => {
   try {
-    await axios.put(`${completeURI}/${id}`, input);
+    const { d } = await axios.put(`${completeURI}/${id}`, input);
     return {
       message: "Event deleted successfully",
       status: 200,

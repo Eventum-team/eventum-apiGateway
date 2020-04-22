@@ -1,4 +1,4 @@
-const ENDPOINT = `http://54.144.123.79`;
+const ENDPOINT = `http://3.90.43.20`;
 const PORT = "3000";
 const BASEPATH = "/";
 

@@ -11,6 +11,7 @@ type User {
     updated_at: String!
     groupsFollowing: [Group]
     eventsCreated: [Event]
+    photo: String
 }
 input UserInput {
     username: String

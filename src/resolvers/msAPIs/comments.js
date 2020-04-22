@@ -4,6 +4,8 @@ const completeURI = `${URI}comment`;
 const completeURIReact = `${URI}react`;
 
 const getCommentsByID = async ({ eventId, usrId }) => {
+  console.log({ eventId, usrId });
+
   try {
     const { data } = await axios.get(`${completeURI}/${eventId}/${usrId}`);
     return data;
@@ -64,20 +66,27 @@ const reactComment = async ({ input }) => {
     const { data } = await axios.post(`${completeURIReact}`, input); // event obj structured define in resolver function
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
 const unreactComment = async ({ id, idusr }) => {
   try {
     const { data } = await axios.delete(`${completeURIReact}/${id}/${idusr}`);
-    console.log(id);
-    console.log(idusr);
-    console.log(data);
 
     return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
   }
 };
 
@@ -87,5 +96,5 @@ module.exports = {
   updateComment,
   deleteComment,
   reactComment,
-  unreactComment
+  unreactComment,
 };
