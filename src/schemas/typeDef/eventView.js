@@ -10,7 +10,7 @@ const eventViewQueries = `
   `;
 
 const eventViewMutations = `
-  createEvent(token: AccessToken,input: EventInput): Message
+  createEvent(input: EventInput): Message
   editEvent(token: AccessToken,input: EventInput, id:ID!): Message
   deleteEvent(token: AccessToken,id: ID!,ownerId: ID!): Message
 `;

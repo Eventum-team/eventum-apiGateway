@@ -106,7 +106,7 @@ const eventsByName = async (name) => {
   }
 };
 
-const createEvent = async ({ input, token }) => {
+const createEvent = async ({ input }) => {
   try {
     const message = await addEvent({ input: input });
     return message;

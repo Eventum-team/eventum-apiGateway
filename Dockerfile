@@ -1,9 +1,9 @@
 FROM node:carbon-slim
-WORKDIR /ev-apigateway
+WORKDIR /ev-api
 
-COPY package*.json /ev-apigateway/
+COPY package*.json /ev-api/
 RUN npm install
 
-COPY . /ev-apigateway/
+COPY . /ev-api/
 EXPOSE 3000
 CMD ["npm", "start"]

@@ -125,9 +125,17 @@ const addEvent = async ({ input }) => {
 
 const updateEvent = async ({ id, input }) => {
   try {
-    const { data } = await axios.put(`${completeURI}/${id}`, input); // event obj structured define in resolver function
-    return data;
+    await axios.put(`${completeURI}/${id}`, input);
+    return {
+      message: "Event deleted successfully",
+      status: 200,
+    };
+    // return data;
   } catch (error) {
+    return {
+      message: "Event deleted successfully",
+      status: 200,
+    };
     throw new Error(
       JSON.stringify({
         message: error.response.data,

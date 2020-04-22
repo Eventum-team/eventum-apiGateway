@@ -32,7 +32,7 @@ const userAuthcreate = async ({ input }) => {
     const res = await createUserAuth(authData);
     return res;
   } catch (error) {
-    console.log(error);
+    throwCustomError(error);
   }
 };
 

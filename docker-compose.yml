@@ -1,8 +1,8 @@
 version: "2.1"
 
 services:
-  ev-apigateway:
-    container_name: ev-apigateway
+  ev-api:
+    container_name: ev-api
     build: .
     ports:
       - "3000:3000"
