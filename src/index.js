@@ -52,5 +52,5 @@ app.post("/upload1", (req, res) => {
 app.use(express.static("public")); //testeo
 
 app.listen(3000, () =>
-  console.log("Running a GraphQL API server at localhost:5000/graphql")
+  console.log("Running a GraphQL API server at localhost:3000/graphql")
 );
