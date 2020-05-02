@@ -30,6 +30,7 @@ type Type {
 
 const groupsQueries = `
     groups: [Group!]! 
+    groupTypes: [Type!]!
     groupByID(groupId: ID!): Group!
     groupsByName(name: String!):[Group!]! 
     groupsByIdType(id_type: Int!):[Group!]! 
