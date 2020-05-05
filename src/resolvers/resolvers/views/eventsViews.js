@@ -1,7 +1,7 @@
 const { throwCustomError } = require("../../../utils/errors");
 const { tokenOutOfDate } = require("../../../utils/messages");
 const { getCommentsByID } = require("../../msAPIs/comments");
-const { getAllEvent } = require("../../msAPIs/media");
+const { getAllEvent, getOneProfileEvent, getOneGroupProfileEvent} = require("../../msAPIs/media");
 
 const {
   getEventsByRangeDate,
@@ -35,8 +35,18 @@ const buildEvents = async (events) => {
       const assistant = await getAssistantUsersByEvent;
       ({ eventId: id });
       events[i].followers = assistant.length;
-      // const photos = await getAllEvent({});
-      // events[i].photo = await eventPhoto(id);
+      getOneProfileEvent
+
+      //media
+      const image = await  getOneGroupProfileEvent({ 
+        id_event: id,
+        id_group: events[i].ownerId
+      });
+      
+      if (image.length){
+        events[i].photo = image[0].path;
+      }
+      
     }
     return events;
   } catch (error) {
@@ -150,6 +160,17 @@ const eventProfile = async ({ eventId, userId }) => {
     event.interested = interested;
     const assistant = await getAssistantUsersByEvent({ eventId: eventId });
     event.assistant = assistant;
+
+    
+    const image = await  getOneGroupProfileEvent({ 
+      id_event: eventId,
+      id_group: event.ownerId
+    });
+
+    if (image.length){
+      event.photo = image[0].path;
+    }
+    
     return event;
   } catch (error) {
     throwCustomError(error);

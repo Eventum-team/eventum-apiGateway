@@ -70,9 +70,9 @@ const userProfile = async ({ userId }) => {
 
     user.groupsFollowing = groups;
     const image = await getOneProfile({ id_type: userId });
-    console.log("image", image);
+    
     if (image.length){
-      user.photo = image[0].path;
+      user.photo = image[image.length - 1].path;
     }
     return user;
   } catch (error) {
