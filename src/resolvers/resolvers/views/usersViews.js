@@ -1,6 +1,6 @@
 const { throwCustomError } = require("../../../utils/errors");
 const { tokenOutOfDate } = require("../../../utils/messages");
-const { getOneProfile } = require("../../msAPIs/media");
+const { getOneProfile, createImage} = require("../../msAPIs/media");
 const { loginVerify, createUserAuth } = require("../../msAPIs/auth");
 const {
   getUserByID,
@@ -31,6 +31,17 @@ const userAuthcreate = async ({ input }) => {
         idUser: idUser[idUser.length - 1],
       },
     };
+
+    if (input.photo){
+      createImage({
+        input:{
+          profile: true,
+          id_type: idUser[idUser.length - 1],
+          path: input.photo
+        }
+      });
+    }
+
     const res = await createUserAuth(authData);
     return res;
   } catch (error) {
