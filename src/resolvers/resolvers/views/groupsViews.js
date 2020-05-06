@@ -2,7 +2,7 @@ const { throwCustomError } = require("../../../utils/errors");
 const { tokenOutOfDate } = require("../../../utils/messages");
 const { getEventsByOwnerID } = require("../../msAPIs/events");
 const { getOneProfileGroup } = require("../../msAPIs/media");
-
+const {photoRoute} = require("../../../ipconfig");
 
 const {
   updateGroup,
@@ -55,7 +55,7 @@ const buildGroups = async (groups) => {
       const image = await getOneProfileGroup({ id_group: id_group });
       
       if (image.length){
-        groups[i].photo = image[0].path;
+        groups[i].photo = photoRoute + image[0].path;
       }
       
     }

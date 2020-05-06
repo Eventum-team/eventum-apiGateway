@@ -2,6 +2,7 @@ const { throwCustomError } = require("../../../utils/errors");
 const { tokenOutOfDate } = require("../../../utils/messages");
 const { getCommentsByID } = require("../../msAPIs/comments");
 const { getAllEvent, getOneProfileEvent, getOneGroupProfileEvent} = require("../../msAPIs/media");
+const {photoRoute} = require("../../../ipconfig");
 
 const {
   getEventsByRangeDate,
@@ -44,7 +45,7 @@ const buildEvents = async (events) => {
       });
       
       if (image.length){
-        events[i].photo = image[0].path;
+        events[i].photo = photoRoute + image[0].path;
       }
       
     }
@@ -168,7 +169,7 @@ const eventProfile = async ({ eventId, userId }) => {
     });
 
     if (image.length){
-      event.photo = image[0].path;
+      event.photo = photoRoute + image[0].path;
     }
     
     return event;

@@ -9,6 +9,11 @@ const root = require("./resolvers/resolvers/resolvers");
 const { multerStorage } = require("./utils/middlewares/imgMiddleware");
 
 const app = express();
+
+app.use(function (err, req, res, next) {
+  next(err)
+});
+
 app.set("view engine", "ejs");
 app.use(multerStorage);
 
@@ -44,7 +49,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/upload1", (req, res) => {
-  res.send(req.file.path);
+  res.send(req.file.filename);
   // log(req.);
 });
 

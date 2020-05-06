@@ -9,6 +9,7 @@ const {
 } = require("../../msAPIs/users");
 const { getEventsByOwnerID } = require("../../msAPIs/events");
 const { getGroupByID } = require("../../msAPIs/groups");
+const {photoRoute} = require("../../../ipconfig");
 
 const userAuthcreate = async ({ input }) => {
   try {
@@ -72,7 +73,7 @@ const userProfile = async ({ userId }) => {
     const image = await getOneProfile({ id_type: userId });
     
     if (image.length){
-      user.photo = image[image.length - 1].path;
+      user.photo = photoRoute + image[image.length - 1].path;
     }
     return user;
   } catch (error) {
