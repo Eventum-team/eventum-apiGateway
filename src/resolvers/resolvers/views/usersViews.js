@@ -32,6 +32,9 @@ const userAuthcreate = async ({ input }) => {
       },
     };
 
+    console.log(input.photo);
+    
+
     if (input.photo){
       createImage({
         input:{

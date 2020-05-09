@@ -5,6 +5,7 @@ input GroupInput {
     name: String!
     description: String!
     contact_number: String!
+    photo: String
     status: String!
 }
 type Group {
