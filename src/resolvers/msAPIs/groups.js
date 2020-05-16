@@ -158,8 +158,24 @@ const getTypeById = async ({ id }) => {
   }
 };
 
+
+const getGroupTypes = async ({ id }) => {
+  try {
+    const { data } = await axios.get(`${completeTypeURI}`);
+    return data;
+  } catch (error) {
+    throw new Error(
+      JSON.stringify({
+        message: error.response.data,
+        status: error.response.status,
+      })
+    );
+  }
+};
+
 module.exports = {
   getAllGroups,
+  getGroupTypes,
   getGroupByID,
   getGroupsByName,
   getGroupsByIdType,

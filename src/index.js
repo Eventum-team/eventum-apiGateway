@@ -1,16 +1,25 @@
 const express = require("express");
 const graphqlHTTP = require("express-graphql");
 const { buildSchema } = require("graphql");
-
+const cors = require('cors'); // LINEA ESTA
 const schemaStructure = require("./schemas/typeDef/schema");
 const schema = buildSchema(schemaStructure);
 
 const root = require("./resolvers/resolvers/resolvers");
 const { multerStorage } = require("./utils/middlewares/imgMiddleware");
+const {port} = require('./ipconfig');
+
 
 const app = express();
+
+app.use(function (err, req, res, next) {
+  next(err)
+});
+
 app.set("view engine", "ejs");
 app.use(multerStorage);
+
+app.use(cors()); // LINEA ESTA
 app.use(
   "/graphql",
   graphqlHTTP({
@@ -42,13 +51,13 @@ app.get("/", (req, res) => {
 });
 
 app.post("/upload1", (req, res) => {
-  res.send(req.file.path);
+  res.send(req.file.filename);
   // log(req.);
 });
 
 // static files acceso desde navegador
 app.use(express.static("public")); //testeo
 
-app.listen(3000, () =>
-  console.log("Running a GraphQL API server at localhost:3000/graphql")
-);
+app.listen(port, () => {
+  console.log(`Running a GraphQL API server at localhost:${port}/graphql`);
+});

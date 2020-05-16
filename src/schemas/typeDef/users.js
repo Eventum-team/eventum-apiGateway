@@ -21,6 +21,7 @@ input UserInput {
     age: Int
     career: String
     status: String
+    photo: String
 }
 type UserGroup {
     user_id: Int!

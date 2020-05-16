@@ -1,6 +1,6 @@
 const { throwCustomError } = require("../../../utils/errors");
 const { tokenOutOfDate } = require("../../../utils/messages");
-const { getOneProfile } = require("../../msAPIs/media");
+const { getOneProfile, createImage} = require("../../msAPIs/media");
 const { loginVerify, createUserAuth } = require("../../msAPIs/auth");
 const {
   getUserByID,
@@ -9,6 +9,7 @@ const {
 } = require("../../msAPIs/users");
 const { getEventsByOwnerID } = require("../../msAPIs/events");
 const { getGroupByID } = require("../../msAPIs/groups");
+const {photoRoute} = require("../../../ipconfig");
 
 const userAuthcreate = async ({ input }) => {
   try {
@@ -30,6 +31,20 @@ const userAuthcreate = async ({ input }) => {
         idUser: idUser[idUser.length - 1],
       },
     };
+
+    console.log(input.photo);
+    
+
+    if (input.photo){
+      createImage({
+        input:{
+          profile: true,
+          id_type: idUser[idUser.length - 1],
+          path: input.photo
+        }
+      });
+    }
+
     const res = await createUserAuth(authData);
     return res;
   } catch (error) {
@@ -70,9 +85,10 @@ const userProfile = async ({ userId }) => {
 
     user.groupsFollowing = groups;
     const image = await getOneProfile({ id_type: userId });
-    console.log(image);
-
-    user.photo = image[0].path;
+    
+    if (image.length){
+      user.photo = photoRoute + image[image.length - 1].path;
+    }
     return user;
   } catch (error) {
     throwCustomError(error);

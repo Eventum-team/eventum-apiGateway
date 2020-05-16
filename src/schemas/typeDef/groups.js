@@ -5,6 +5,7 @@ input GroupInput {
     name: String!
     description: String!
     contact_number: String!
+    photo: String
     status: String!
 }
 type Group {
@@ -29,17 +30,12 @@ type Type {
 `;
 
 const groupsQueries = `
-    groups: [Group!]! 
+    groupTypes: [Type!]!
     groupByID(groupId: ID!): Group!
-    groupsByName(name: String!):[Group!]! 
-    groupsByIdType(id_type: Int!):[Group!]! 
-    groupsByNameAndIdType(name: String, id_type: Int):[Group!]! 
     typeById(id: ID!): Type
 `;
 
 const groupsMutations = `
-    addGroup(input: GroupInput ): Message
-    updateGroup(id: ID!,input: GroupInput ): Message
     deleteGroup(id: ID!): Message
 `;
 

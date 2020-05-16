@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 
 // Middleware
 const storage = multer.diskStorage({
-  destination: "src/public/uploads",
+  destination: "public/uploads",
   filename: (req, file, cb) => {
     cb(null, uuidv4() + path.extname(file.originalname).toLocaleLowerCase());
   },

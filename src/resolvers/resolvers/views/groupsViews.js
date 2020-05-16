@@ -1,6 +1,8 @@
 const { throwCustomError } = require("../../../utils/errors");
 const { tokenOutOfDate } = require("../../../utils/messages");
 const { getEventsByOwnerID } = require("../../msAPIs/events");
+const { getOneProfileGroup, createImage} = require("../../msAPIs/media");
+const {photoRoute} = require("../../../ipconfig");
 
 const {
   updateGroup,
@@ -47,8 +49,18 @@ const buildGroups = async (groups) => {
       groups[i].followers = followers.length;
       const admins = await getAdminsByGroup({ groupId: id_group });
       groups[i].admins = admins;
+      
       //media
-      // groups[i].photo = await ...;
+      
+      const image = await getOneProfileGroup({ id_group: id_group });
+      
+      
+
+      if (image.length){
+        console.log(photoRoute + image[0].path);
+        groups[i].photo = photoRoute + image[0].path;
+      }
+      
     }
   } catch (error) {
     throwCustomError(error);
@@ -116,6 +128,18 @@ const createNewGroup = async ({ id_user, input, token }) => {
     const message = await createUserGroup({
       input: { user_id: id_user, group_id: id_group, status: "admin" },
     });
+
+    console.log (input.photo);
+    if (input.photo){
+      createImage({
+        input:{
+          profile: true,
+          id_group: id_group,
+          path: input.photo
+        }
+      });
+    }
+
     return group;
     //Media
   } catch (error) {
