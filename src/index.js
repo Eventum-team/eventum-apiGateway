@@ -46,7 +46,7 @@ app.use(
 );
 
 //rutas testeo
-app.get("/", (req, res) => {
+app.get("/img", (req, res) => {
   res.render("index");
 });
 
