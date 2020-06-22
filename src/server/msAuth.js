@@ -1,7 +1,8 @@
-const PORT = "8000";
-const END_POINT = "http://52.55.154.183";
-const BASE_URI = "/";
+const PORT = process.env.AUTH_PORT;
+const IP = process.env.AUTH_IP;
 
-const URL = END_POINT + ":" + PORT + BASE_URI;
+const URL = `http://${IP}:${PORT}/`;
+
+console.log(URL);
 
 module.exports = URL;

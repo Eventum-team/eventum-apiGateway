@@ -6,7 +6,16 @@ services:
     build: .
     ports:
       - "3000:3000"
-  sa-proxy:
-    build: sa-proxy/
-    ports:
-      - "80:80"
+    environment:
+      - AUTH_IP=1.2.3.4
+      - AUTH_PORT=1234
+      - GROUP_IP=1.2.3.5
+      - GROUP_PORT=1235
+      - EVENT_IP=1.2.3.6
+      - EVENT_PORT=1236
+      - COMMENT_IP=1.2.3.7
+      - COMMENT_PORT=1237
+      - MEDIA_IP=1.2.3.8
+      - MEDIA_PORT=1238
+      - USER_IP=1.2.3.9
+      - USER_PORT=1239     

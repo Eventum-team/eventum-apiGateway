@@ -1,7 +1,8 @@
-const PORT = "8000";
-const END_POINT = "http://186.154.188.165";
-const BASE_URI = "/api/";
+const PORT = process.env.COMMENT_PORT;
+const IP = process.env.COMMENT_IP;
 
-const URL = END_POINT + ":" + PORT + BASE_URI;
+const URL = `http://${IP}:${PORT}/`;
+
+console.log(URL);
 
 module.exports = URL;

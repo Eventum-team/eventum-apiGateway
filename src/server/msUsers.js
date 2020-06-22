@@ -1,7 +1,8 @@
-const ENDPOINT = `http://54.85.121.208`;
-const PORT = "3000";
-const BASEPATH = "/";
+const PORT = process.env.USER_PORT;
+const IP = process.env.USER_IP;
 
-const URI = `${ENDPOINT}:${PORT}${BASEPATH}`;
+const URI = `http://${IP}:${PORT}/`;
+
+console.log(URI);
 
 module.exports.URI = URI;
